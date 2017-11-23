@@ -1,0 +1,20 @@
+/*
+color codes:
+gold:#CEB549
+matt black: #2A2A2A
+*/
+
+.footer{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    text-align: center;
+    background-color: #2A2A2A;
+    color: white;
+}
+
+/*.white-text{
+    color: white;
+}*/

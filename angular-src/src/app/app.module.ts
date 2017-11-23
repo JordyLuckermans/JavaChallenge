@@ -18,6 +18,7 @@ import {AuthGuard} from './guards/auth.guard';
 import { TimelineComponent } from './components/timeline/timeline.component';
 import { TimelinesComponent } from './components/timelines/timelines.component';
 import { WeekViewComponent } from './components/week-view/week-view.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 const appRoutes:Routes=[
 
@@ -39,7 +40,8 @@ const appRoutes:Routes=[
     ProfileComponent,
     TimelineComponent,
     TimelinesComponent,
-    WeekViewComponent
+    WeekViewComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
