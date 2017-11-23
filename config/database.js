@@ -1,5 +1,5 @@
 module.exports={
-    database: 'mongodb://localhost:27017/polargram',
+    database: 'mongodb://localhost:27017/LGU',
     secret:'yoursecret'
 
 }
