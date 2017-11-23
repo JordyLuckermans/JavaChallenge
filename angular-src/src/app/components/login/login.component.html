@@ -3,11 +3,9 @@
 
 <form (submit)="onLoginSubmit()" class="form-horizontal">
 
-
-
   <div class="form-group">
     <label class="col-lg-2 control-label">Username:</label>
-    <div class="col-lg-10">
+    <div class="col-lg-4">
       <input type="text"  [(ngModel)]="username" name="username" class="form-control"  placeholder="Username">
     </div>
   </div>
@@ -16,15 +14,11 @@
     <label  class="col-lg-2 control-label">Password:</label>
     <div class="col-lg-10">
       <input type="password" [(ngModel)]="password" name="password" class="form-control" placeholder="Password">
-
     </div>
   </div>
 
-
-
   <div class="form-group">
-    <div class="col-lg-10 col-lg-offset-2">
-
+    <div class="col-lg-4 col-lg-offset-2">
       <button type="submit" value="Login" class="btn btn-primary">Login</button>
     </div>
   </div>
