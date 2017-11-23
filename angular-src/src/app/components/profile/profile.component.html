@@ -1,0 +1,11 @@
+<div *ngIf="user">
+  <h2 class="page-header">{{user.name}}</h2>
+  <ul class="list-group">
+    <li class="list-group-item">Username:{{user.username}}</li>
+    <li class="list-group-item">Email: {{user.email}}</li>
+  </ul>
+  <input type="file" (change)="fileChangeEvent($event)" placeholder="Upload file..." />
+  <button class="btn btn-primary " type="button" (click)="upload()">Upload</button>
+</div>
+
+
