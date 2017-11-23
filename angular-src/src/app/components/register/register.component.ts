@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit {
 username: String;
 email: String;
 password: String;
+phoneNumber: Number;
   constructor(private validateService:ValidateService,
               private flashMessage:FlashMessagesService,
               private authService:AuthService,
@@ -26,7 +27,8 @@ onRegisterSubmit(){
       name: this.name,
       email: this.email,
       username: this.username,
-      password: this.password
+      password: this.password,
+      phoneNumber: this.phoneNumber
     }
 console.log(user);
     //Required fields
