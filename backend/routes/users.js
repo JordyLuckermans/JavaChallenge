@@ -10,7 +10,8 @@ router.post('/register',function(req,res,next){
        name:req.body.name,
        email:req.body.email,
        username:req.body.username,
-       password:req.body.password
+       password:req.body.password,
+       phoneNumber:req.body.phoneNumber
    });
 
    User.addUser(newUser,function(err,user){

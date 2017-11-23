@@ -18,6 +18,10 @@ const userSchema=mongoose.Schema({
     password:{
         type:String,
         required:true
+    },
+    phoneNumber:{
+        type:int,
+        required:true
     }
 });
 
