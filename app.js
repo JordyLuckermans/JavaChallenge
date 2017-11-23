@@ -20,6 +20,8 @@ mongoose.connection.on('error',function(err){
 const app=express();
 
 const users=require('./routes/users');
+//const rooms=require('./routes/rooms');
+
 //Port number
 const port =6600;
 
@@ -34,6 +36,7 @@ app.use(passport.session());
 require('./config/passport')(passport);
 
 app.use('/users',users);
+//app.use('/rooms',rooms);
 
 //index route
 app.get('/', function(req, res){
@@ -47,7 +50,7 @@ app.listen(port, function(){
 
 //file upload
 
-app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
