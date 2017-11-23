@@ -20,7 +20,7 @@ const userSchema=mongoose.Schema({
         required:true
     },
     phoneNumber:{
-        type:int,
+        type:Number,
         required:true
     }
 });
