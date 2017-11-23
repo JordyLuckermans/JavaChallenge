@@ -15,12 +15,16 @@ import {ValidateService} from './services/validate.service';
 import {AuthService} from './services/auth.service';
 import{FlashMessagesModule} from'angular2-flash-messages';
 import {AuthGuard} from './guards/auth.guard';
+import { TimelineComponent } from './components/timeline/timeline.component';
+import { TimelinesComponent } from './components/timelines/timelines.component';
+import { WeekViewComponent } from './components/week-view/week-view.component';
 
 const appRoutes:Routes=[
 
   {path:'',component:HomeComponent},
   {path:'register',component:RegisterComponent},
   {path:'login',component:LoginComponent},
+  {path:'timeline',component:TimelinesComponent},
   {path:'dashboard',component:DashboardComponent,canActivate:[AuthGuard]},
   {path:'profile',component:ProfileComponent,canActivate:[AuthGuard]},
 ]
@@ -32,7 +36,10 @@ const appRoutes:Routes=[
     RegisterComponent,
     HomeComponent,
     DashboardComponent,
-    ProfileComponent
+    ProfileComponent,
+    TimelineComponent,
+    TimelinesComponent,
+    WeekViewComponent
   ],
   imports: [
     BrowserModule,
