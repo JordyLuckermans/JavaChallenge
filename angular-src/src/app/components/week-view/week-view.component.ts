@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-week-view',
@@ -6,6 +7,8 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class WeekViewComponent implements OnInit {
   @Input() firstdayOfWeek: Date;
+
+  date:Date;
 
   daysOfWeek: Date[];
 
@@ -36,7 +39,7 @@ export class WeekViewComponent implements OnInit {
   ];
   //dummie data
 
-  constructor() {
+  constructor(private router:Router) {
 
   }
 
@@ -51,5 +54,10 @@ export class WeekViewComponent implements OnInit {
 
   formatDate(d: Date) {
     return this.weekDays[d.getDay()] + "\n" + d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+  }
+
+  //test
+  testDate(){
+    this.router.navigate(['/timeline', { date: this.date }]);
   }
 }

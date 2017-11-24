@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+
 
 @Component({
   selector: 'app-timelines',
@@ -7,13 +9,17 @@ import { Component, OnInit } from '@angular/core';
 export class TimelinesComponent implements OnInit {
 
   //dummie
-  firstDay = new Date();
+  firstDay: Date = new Date();
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
 
   }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.firstDay = params['date'];
+      console.log("test" + this.firstDay);
+    });
   }
 
 }
