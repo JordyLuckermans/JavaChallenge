@@ -9,7 +9,7 @@ export class RoomService {
 
   constructor(private http: Http) {}
 
-  url = "https://localhost:6600";
+  url = "http://localhost:6600";
 
   room: Room;
   rooms: Room[] = [];
