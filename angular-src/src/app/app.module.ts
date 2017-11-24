@@ -19,6 +19,7 @@ import { TimelineComponent } from './components/timeline/timeline.component';
 import { TimelinesComponent } from './components/timelines/timelines.component';
 import { WeekViewComponent } from './components/week-view/week-view.component';
 import { FooterComponent } from './components/footer/footer.component';
+import {ReserveComponent} from "./components/reserve/reserve.component";
 
 const appRoutes:Routes=[
 
@@ -28,6 +29,7 @@ const appRoutes:Routes=[
   {path:'timeline',component:TimelinesComponent},
   {path:'dashboard',component:DashboardComponent,canActivate:[AuthGuard]},
   {path:'profile',component:ProfileComponent,canActivate:[AuthGuard]},
+  {path:'reserve', component:ReserveComponent},
 ]
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ const appRoutes:Routes=[
     TimelinesComponent,
     WeekViewComponent,
     FooterComponent,
+    ReserveComponent,
   ],
   imports: [
     BrowserModule,
