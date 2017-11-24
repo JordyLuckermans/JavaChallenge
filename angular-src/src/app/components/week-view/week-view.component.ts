@@ -47,6 +47,7 @@ export class WeekViewComponent implements OnInit {
     let tempDates: Date[] = [];
     for (let i = 0; i < 7; ++i) {
       tempDates.push(new Date(this.firstdayOfWeek));
+      console.log(tempDates + " " + i);
       tempDates[i].setDate(tempDates[i].getDate() + i);
     }
     this.daysOfWeek = tempDates;
@@ -58,6 +59,10 @@ export class WeekViewComponent implements OnInit {
 
   //test
   testDate(){
-    this.router.navigate(['/timeline', {date: this.dateIn}]);
+    //loading the same route with defferent params doesn't reload...
+    this.router.navigateByUrl('/').then(
+      () => {
+        this.router.navigate(['/timeline', {date: this.dateIn}]);
+      });
   }
 }

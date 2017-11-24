@@ -18,7 +18,7 @@ export class TimelinesComponent implements OnInit {
         let str:String = params['date'];
         let parts = str.split('-');
         console.log(parts);
-        this.firstDay = new Date(+parts[0],+parts[1],+parts[2]);
+        this.firstDay = new Date(+parts[0],+parts[1] - 1,+parts[2]);
         console.log("test" + this.firstDay.getDate() + '/' + this.firstDay.getMonth()) ;
       }
     });
