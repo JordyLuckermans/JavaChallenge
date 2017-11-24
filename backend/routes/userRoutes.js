@@ -1,9 +1,28 @@
-const express=require('express');
+'use strict';
+const jwt=require('jsonwebtoken');
+const passport=require('passport');
+
+module.exports = function(app) {
+    var UserController = require('../controllers/userController');
+
+    app.route('/register')
+        .post(UserController.registerUser);
+
+    app.route('/authenticate')
+        .post(UserController.authenticateUser);
+    
+    app.route('/profile')
+        .get(passport.authenticate('jwt',{session:false}), UserController.getProfile);
+};
+
+
+
+/*const express=require('express');
 const router=express.Router();
 const User=require('../models/user');
-const passport=require('passport');
-const jwt=require('jsonwebtoken');
 const config=require('../config/database')
+
+
 
 router.post('/register',function(req,res,next){
    const newUser=new User({
@@ -65,5 +84,5 @@ router.post('/authenticate',function(req,res,next){
 
 router.get('/profile',passport.authenticate('jwt',{session:false}),function(req,res,next){
     res.json({user:req.user})
-});
-module.exports=router;
+});*/
+//module.exports=router;
