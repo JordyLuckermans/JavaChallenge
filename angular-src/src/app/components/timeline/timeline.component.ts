@@ -26,7 +26,7 @@ export class TimelineComponent implements OnInit {
     let svgRect = [];
 
     this.reservationsDay.forEach((r) => {
-      svgRect.push(this.calculateReservedBar(r.start, r.end));
+      svgRect.push(this.calculateReservedBar(r.starttime, r.endtime));
     });
 
     this.svgRects = svgRect;
