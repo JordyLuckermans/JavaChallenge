@@ -19,7 +19,13 @@ const userSchema = mongoose.Schema({
     phoneNumber: {
         type: Number,
         required: true
+    },
+    isAdmin:{
+        type:Boolean,
+        default:false,
+        required:true
     }
+
 });
 
 const User = module.exports = mongoose.model('User', userSchema);
