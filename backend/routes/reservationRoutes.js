@@ -11,4 +11,10 @@ module.exports = function(app) {
         .get(ReservationController.getReservationById)
         .delete(ReservationController.deleteReservation)
         .put(ReservationController.updateReservation);
+
+    app.route('/reservations/:id/confirm')
+        .patch(ReservationController.confirmReservation);
+
+    app.route('/reservations/:id/deny')
+        .patch(ReservationController.denyReservation);
 };
