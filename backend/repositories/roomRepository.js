@@ -36,7 +36,7 @@ exports.addRoom = function (req, res) {
 exports.updateRoom = function (req, res) {
     const newRoom = new Room(req.body);
 
-    Room.update({_id: newRoom._id}, newRoom,function (err, room) {
+    Room.update({_id: req.params.id}, newRoom,function (err, room) {
         if (err) {
             res.json({success: false, msg: 'Failed to update room'});
         } else {

@@ -3,13 +3,12 @@
 module.exports = function(app) {
     var RoomController = require('../controllers/roomController');
 
-    // todoList Routes
     app.route('/rooms')
         .get(RoomController.getAllRooms)
-        .post(RoomController.addRoom)
-        .put(RoomController.updateRoom);
+        .post(RoomController.addRoom);
 
     app.route('/rooms/:id')
         .get(RoomController.getRoomById)
-        .delete(RoomController.deleteRoom);
+        .delete(RoomController.deleteRoom)
+        .put(RoomController.updateRoom);
 };
