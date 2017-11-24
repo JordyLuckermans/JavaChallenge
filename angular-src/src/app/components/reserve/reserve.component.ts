@@ -17,7 +17,7 @@ export class ReserveComponent implements OnInit {
   endtime: String;
   motivation: String;
   comment: String;
-
+  
   constructor(private validateService: ValidateService,
               private authService: AuthService,
               private router: Router,
@@ -44,10 +44,18 @@ export class ReserveComponent implements OnInit {
 
     if(!this.validateService.validateTime(this.starttime) && !this.validateService.validateTime(this.endtime)){
       this.flashMessage.show("vul aub een geldig tijdstip in", {cssClass: 'alert-danger', timeout: 3000});
-
       return false;
     }
 
+    if(Date.now() > parsedStartDate || Date.now() > parsedEndDate){
+      this.flashMessage.show("vul aub een datum in de toekoemst in", {cssClass: 'alert-danger', timeout: 3000});
+      return false;
+    }
+
+    if( parsedStartDate > parsedEndDate){
+      this.flashMessage.show("vul aub een einduur na uw beginuur in", {cssClass: 'alert-danger', timeout: 3000});
+      return false;
+    }
 
     const reservation = {
       room: this.room,
@@ -66,8 +74,5 @@ export class ReserveComponent implements OnInit {
 
       return false;
     }
-
-
-
   }
 }
