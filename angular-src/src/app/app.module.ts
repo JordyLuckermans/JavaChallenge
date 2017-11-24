@@ -20,6 +20,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { OverviewRoomsComponent } from './components/overview-rooms/overview-rooms.component';
 import { ReserveComponent} from "./components/reserve/reserve.component";
 import {ReservationService} from "./services/reservation.service";
+import { EditRoomComponent } from './components/edit-room/edit-room.component';
 
 const appRoutes:Routes=[
   {path:'',component:HomeComponent},
@@ -27,6 +28,7 @@ const appRoutes:Routes=[
   {path:'login',component:LoginComponent},
   {path:'timeline',component:TimelinesComponent},
   {path:'overviewRooms',component:OverviewRoomsComponent},
+  {path:'editRoom',component:EditRoomComponent},
   /*{path:'dashboard',component:DashboardComponent,canActivate:[AuthGuard]},
   {path:'profile',component:ProfileComponent,canActivate:[AuthGuard]},*/
   {path:'reserve', component:ReserveComponent},
@@ -45,6 +47,7 @@ const appRoutes:Routes=[
     FooterComponent,
     OverviewRoomsComponent,
     ReserveComponent,
+    EditRoomComponent,
   ],
   imports: [
     BrowserModule,
