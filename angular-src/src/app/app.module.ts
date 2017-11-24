@@ -41,7 +41,7 @@ const appRoutes:Routes=[
     TimelineComponent,
     TimelinesComponent,
     WeekViewComponent,
-    FooterComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

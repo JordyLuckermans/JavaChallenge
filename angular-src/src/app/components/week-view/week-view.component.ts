@@ -1,13 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-week-view',
   templateUrl: './week-view.component.html'
 })
 export class WeekViewComponent implements OnInit {
+  @Input() firstdayOfWeek: Date;
+
+  daysOfWeek: Date[];
 
   indexes = [0, 1, 2, 3, 4, 5, 6];
-  weekDays = ["maa", "din", "woe", "don", "vrij", "zat", "zon"];
+  weekDays = ["zon", "maa", "din", "woe", "don", "vrij", "zat"];
   reservations = [
     [ //maa
       {
@@ -38,7 +41,15 @@ export class WeekViewComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    let tempDates: Date[] = [];
+    for (let i = 0; i < 7; ++i) {
+      tempDates.push(new Date(this.firstdayOfWeek));
+      tempDates[i].setDate(tempDates[i].getDate() + i);
+    }
+    this.daysOfWeek = tempDates;
   }
 
+  formatDate(d: Date) {
+    return this.weekDays[d.getDay()] + "\n" + d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+  }
 }
