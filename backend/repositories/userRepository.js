@@ -12,22 +12,13 @@ exports.getAllUsers = function (req, res) {
     });
 };
 
-exports.getUserById = function (req, res) {
-    User.findById({_id: req.params.id}, function (err, user) {
-        if (err) {
-            res.json(err);
-        }
-        res.json(user);
-    });
+exports.getUserById = function (id, callback) {
+    User.findById(id,callback);
 };
 
-exports.getUserByUsername = function (req, res) {
-    User.findById({username: req.params.username}, function (err, user) {
-        if (err) {
-            res.json(err);
-        }
-        res.json(user);
-    });
+exports.getUserByUsername = function (username,callback) {
+   const query={username:username};
+   User.findOne(query,callback);
 };
 
 exports.addUser = function (req, res) {
@@ -63,3 +54,4 @@ exports.deleteUser = function (req, res) {
         }
     });
 };
+
