@@ -21,6 +21,7 @@ import { WeekViewComponent } from './components/week-view/week-view.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { OverviewRoomsComponent } from './components/overview-rooms/overview-rooms.component';
 import { ReserveComponent} from "./components/reserve/reserve.component";
+import { DateTimePickerModule} from "ng-pick-datetime";
 
 const appRoutes:Routes=[
   {path:'',component:HomeComponent},
@@ -48,6 +49,7 @@ const appRoutes:Routes=[
     FooterComponent,
     OverviewRoomsComponent,
     ReserveComponent,
+    DateTimePickerModule,
   ],
   imports: [
     BrowserModule,
