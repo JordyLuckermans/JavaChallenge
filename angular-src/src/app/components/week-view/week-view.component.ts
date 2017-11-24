@@ -14,12 +14,12 @@ export class WeekViewComponent implements OnInit {
   reservations = [
     [ //maa
       {
-        start: new Date(2017, 11, 23, 10),
-        end: new Date(2017, 11, 23, 15, 43)
+        starttime: new Date(2017, 11, 23, 10),
+        endtime: new Date(2017, 11, 23, 15, 43)
       },
       {
-        start: new Date(2017, 11, 23, 16, 55),
-        end: new Date(2017, 11, 23, 20, 30)
+        starttime: new Date(2017, 11, 23, 16, 55),
+        endtime: new Date(2017, 11, 23, 20, 30)
       }
     ],
     [],//din
@@ -28,7 +28,7 @@ export class WeekViewComponent implements OnInit {
     [//vrij
       {
         start: new Date(2017, 11, 23, 12),
-        end: new Date(2017, 11, 23, 21, 30)
+        endtime: new Date(2017, 11, 23, 21, 30)
       }
     ],
     [],//zat

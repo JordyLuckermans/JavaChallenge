@@ -21,6 +21,7 @@ import { WeekViewComponent } from './components/week-view/week-view.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { OverviewRoomsComponent } from './components/overview-rooms/overview-rooms.component';
 import { ReserveComponent} from "./components/reserve/reserve.component";
+import {ReservationService} from "./services/reservation.service";
 
 const appRoutes:Routes=[
   {path:'',component:HomeComponent},
@@ -56,7 +57,12 @@ const appRoutes:Routes=[
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule
   ],
-  providers: [ValidateService, AuthService,AuthGuard],
+  providers: [
+    ValidateService,
+    AuthService,
+    AuthGuard,
+    ReservationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
