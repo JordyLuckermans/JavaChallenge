@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 const bcrypt=require('bcryptjs');
 const config=require('../config/database');
 
-const reservationSchema=mongoose.Schema({
+const reservationSchema= new mongoose.Schema({
 
     room:{
         type:String,
