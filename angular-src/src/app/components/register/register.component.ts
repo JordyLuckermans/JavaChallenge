@@ -43,6 +43,12 @@ console.log(user);
     return false;
   }
 
+  if(!this.validateService.validatePhone(user.phoneNumber)){
+    this.flashMessage.show('Please use a valid phone number (number without symbols)', {cssClass:'alert-danger', timeout:3000});
+
+    return false;
+  }
+
   //register user
 this.authService.registerUser(user).subscribe(data=>{
 if(data.success){
