@@ -28,7 +28,7 @@ const reservationSchema= new mongoose.Schema({
     status: {
         type: [{
             type: String,
-            enum: ['Vrij', 'In afwachting', 'Gereserveerd']
+            array: ['Vrij', 'In afwachting', 'Gereserveerd']
         }],
         default: ['Vrij']
     },
