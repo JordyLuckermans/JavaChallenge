@@ -6,7 +6,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TimelinesComponent implements OnInit {
 
-  constructor() { }
+  //dummie
+  firstDay = new Date();
+
+  constructor() {
+
+  }
 
   ngOnInit() {
   }

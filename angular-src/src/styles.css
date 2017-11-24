@@ -135,6 +135,7 @@ body {
   color: #3E3F3A;
   text-align: left;
   background-color: #fff;
+  margin-bottom: 150px;
 }
 
 [tabindex="-1"]:focus {
