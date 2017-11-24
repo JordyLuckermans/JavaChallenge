@@ -2,16 +2,16 @@ const mongoose=require('mongoose');
 const bcrypt=require('bcryptjs');
 const config=require('../config/database');
 
+const ObjectId = mongoose.Schema.ObjectId;
 const reservationSchema= new mongoose.Schema({
 
     room:{
-        type:String,
+        type:ObjectId,
         required:true
     },
     user:{
-        type:String,
+        type:ObjectId,
         required:true
-
     },
     starttime:{
         type:Date,
