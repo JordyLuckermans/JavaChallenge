@@ -28,15 +28,32 @@ export class ReserveComponent implements OnInit {
   }
 
   onReserveSubmit() {
-    //starttime en endtime
+    var startDateString = this.date + " " + this.starttime;
+    var endDateString = this.date + " " + this.endtime;
 
-    //check availability
+
+    var parsedStartDate = Date.parse(startDateString);
+    var parsedEndDate = Date.parse(endDateString);
+
+    if(!this.validateService.validateDate(startDateString) && !this.validateService.validateDate(endDateString)){
+      this.flashMessage.show("vul aub een geldige datum en tijdstip in", {cssClass: 'alert-danger', timeout: 3000});
+      console.log("date 1" + parsedStartDate);
+      console.log("date 2" + parsedEndDate);
+      return false;
+    }
+
+    if(!this.validateService.validateTime(this.starttime) && !this.validateService.validateTime(this.endtime)){
+      this.flashMessage.show("vul aub een geldig tijdstip in", {cssClass: 'alert-danger', timeout: 3000});
+
+      return false;
+    }
+
 
     const reservation = {
       room: this.room,
       user: this.user,
-      starttime: this.starttime,
-      endtime: this.endtime,
+      starttime: parsedStartDate,
+      endtime: parsedEndDate,
       motivation: this.motivation,
       status: "In Afwachting",
       comment: this.comment
