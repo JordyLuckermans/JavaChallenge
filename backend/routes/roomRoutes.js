@@ -1,11 +1,22 @@
-const express = require('express');
-const router = express.Router();
-const Room = require('../models/room');
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
-const config = require('../config/database')
+'use strict';
 
-router.get('/', function (req, res, next) {
+module.exports = function(app) {
+    var roomController = require('../controllers/roomController');
+
+    // todoList Routes
+    app.route('/rooms')
+        .get(roomController.getAllRooms)
+        .post(roomController.addRoom);
+
+
+    app.route('/rooms/:id')
+        .get(roomController.getRoomById)
+        //.put(todoList.update_a_task)
+        //.delete(todoList.delete_a_task);
+};
+
+
+/*router.get('/', function (req, res, next) {
     Room.getAllRooms(function (err, rooms) {
         if (err) {
             res.json({success: false})
@@ -40,4 +51,4 @@ router.post('/', function (req, res, next) {
 });
 
 
-module.exports = router;
+module.exports = router;*/
