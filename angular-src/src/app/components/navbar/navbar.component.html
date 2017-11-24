@@ -29,9 +29,9 @@
           <li *ngIf="authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']"
               [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/profile']">Profile </a></li>
           <li *ngIf="!authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']"
-              [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/login']">Login </a></li>
+              [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/login']">Inloggen </a></li>
           <li *ngIf="!authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']"
-              [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/register']">Register </a>
+              [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/register']">Registreren </a>
           </li>
           <li *ngIf="authService.loggedIn()" class="nav-item"><a class="nav-link" (click)="onLogoutClick()" href="#">Logout </a>
           </li>
