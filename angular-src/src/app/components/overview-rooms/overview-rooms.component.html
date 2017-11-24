@@ -11,12 +11,15 @@
                 <h4 class="card-title pl-1">Danszaal</h4>
                 <p class="card-text pl-1">Deze danszaal bevat een grote spiegel en parket. Er is airco aanwezig voor het
                     hoofd koel te houden tijdens de warme zomerdagen.</p>
-                <div class="pl-1 text-right">
+                <div class="pl-1">
+                    <!--Volgende knoppen moeten met ngIf want is enkel voor admin-->
+                    <a [routerLink]="['/timeline']" class="btn btn-royal">Bewerken</a>
+                    <a [routerLink]="['/timeline']" class="btn btn-danger">Verwijderen</a>
+                    <!---->
                     <a [routerLink]="['/timeline']" class="btn btn-royal">Beschikbaarheid</a>
                 </div>
             </div>
         </div>
-        <p></p>
     </div>
 
     <div class="col-xs-12 col-md-6 col-lg-4 mb-2">
