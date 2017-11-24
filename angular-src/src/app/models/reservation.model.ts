@@ -6,6 +6,7 @@ export class Reservation {
     public endtime:Date,
     public motivation:String,
     public status:String,
-    public comment:String
+    public comment:String,
+    public id?:String
   ){}
 }
