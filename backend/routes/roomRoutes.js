@@ -1,16 +1,15 @@
 'use strict';
 
 module.exports = function(app) {
-    var roomController = require('../controllers/roomController');
+    var RoomController = require('../controllers/roomController');
 
     // todoList Routes
     app.route('/rooms')
-        .get(roomController.getAllRooms)
-        .post(roomController.addRoom);
-
+        .get(RoomController.getAllRooms)
+        .post(RoomController.addRoom)
+        .put(RoomController.updateRoom);
 
     app.route('/rooms/:id')
-        .get(roomController.getRoomById)
-        //.put(todoList.update_a_task)
-        //.delete(todoList.delete_a_task);
+        .get(RoomController.getRoomById)
+        .delete(RoomController.deleteRoom);
 };
