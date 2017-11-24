@@ -27,13 +27,13 @@
               [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/dashboard']">Dashboard </a>
           </li>
           <li *ngIf="authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']"
-              [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/profile']">Profile </a></li>
+              [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/profile']">Profiel </a></li>
           <li *ngIf="!authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']"
-              [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/login']">Inloggen </a></li>
+              [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/login']">Aanmelden </a></li>
           <li *ngIf="!authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']"
               [routerLinkActiveOptions]="{exact:true}"><a class="nav-link" [routerLink]="['/register']">Registreren </a>
           </li>
-          <li *ngIf="authService.loggedIn()" class="nav-item"><a class="nav-link" (click)="onLogoutClick()" href="#">Logout </a>
+          <li *ngIf="authService.loggedIn()" class="nav-item"><a class="nav-link" (click)="onLogoutClick()" href="#">Afmelden </a>
           </li>
         </ul>
       </div>
