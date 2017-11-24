@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
 export class WeekViewComponent implements OnInit {
   @Input() firstdayOfWeek: Date;
 
-  date:Date;
+  dateIn;
 
   daysOfWeek: Date[];
 
@@ -30,7 +30,7 @@ export class WeekViewComponent implements OnInit {
     [],//don
     [//vrij
       {
-        start: new Date(2017, 11, 23, 12),
+        starttime: new Date(2017, 11, 23, 12),
         endtime: new Date(2017, 11, 23, 21, 30)
       }
     ],
@@ -58,6 +58,6 @@ export class WeekViewComponent implements OnInit {
 
   //test
   testDate(){
-    this.router.navigate(['/timeline', { date: this.date }]);
+    this.router.navigate(['/timeline', {date: this.dateIn}]);
   }
 }

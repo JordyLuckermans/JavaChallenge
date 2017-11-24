@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {isNullOrUndefined} from "util";
 
 
 @Component({
@@ -9,17 +10,21 @@ import {ActivatedRoute} from '@angular/router';
 export class TimelinesComponent implements OnInit {
 
   //dummie
-  firstDay: Date = new Date();
+  firstDay: Date;
 
   constructor(private route: ActivatedRoute) {
-
-  }
-
-  ngOnInit() {
     this.route.params.subscribe(params => {
-      this.firstDay = params['date'];
-      console.log("test" + this.firstDay);
+      if (!isNullOrUndefined(params['date'])) {
+        let str:String = params['date'];
+        let parts = str.split('-');
+        console.log(parts);
+        this.firstDay = new Date(+parts[0],+parts[1],+parts[2]);
+        console.log("test" + this.firstDay.getDate() + '/' + this.firstDay.getMonth()) ;
+      }
     });
   }
 
+  ngOnInit() {
+
+  }
 }
