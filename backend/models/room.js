@@ -22,16 +22,3 @@ const roomSchema = new mongoose.Schema({
 
 const Room = module.exports = mongoose.model('Room', roomSchema);
 
-/*module.exports.getAllRooms = function (callback) {
-    Room.find(callback);
-}
-
-module.exports.getRoomById = function (id, callback) {
-    Room.findById(id, callback);
-}
-
-module.exports.addRoom = function (newRoom, callback) {
-    newRoom.save(callback);
-}*/
-
-
