@@ -6,6 +6,8 @@ const bcrypt = require('bcryptjs');
 const config=require('../config/database');
 const jwt=require('jsonwebtoken');
 
+// Default functions (maybe remove these?)
+
 exports.getAllUsers = function (req, res) {
     UserRepository.getAllUsers(req, res);
 };
@@ -35,15 +37,14 @@ exports.deleteUser = function (req, res) {
 exports.registerUser = function (req, res) {
     const newUser = new User(req.body);
 
-    addUser(newUser, function (err, user) {
-        if (err) {
-            res.json({success: false, msg: 'Failed to register user'});
-        } else {
-            res.json({success: true, msg: 'User registered'});
-
-        }
+    bcrypt.genSalt(10, function (err, salt) {
+        bcrypt.hash(newUser.password, salt, function (err, hash) {
+            if (err) throw err;
+            req.body.password = hash;
+            UserRepository.addUser(req, res);
+        });
     });
-};
+}
 
 exports.authenticateUser = function (req, res) {
     const username = req.body.username;

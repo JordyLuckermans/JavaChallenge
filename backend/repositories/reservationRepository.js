@@ -54,3 +54,13 @@ exports.deleteReservation = function (req, res) {
         }
     });
 };
+
+exports.changeReservationStatus = function (req, res, status) {
+    Reservation.update({_id: req.body._id}, {status: status}, function (err, reservation) {
+        if (err) {
+            res.json({success: false, msg: 'Failed to change reservation status'});
+        } else {
+            res.json({success: true, msg: 'Reservation status updated'});
+        }
+    })
+};
