@@ -5,7 +5,7 @@ const cors = require('cors');
 const passport=require('passport');
 const mongoose=require('mongoose');
 const config=require('./config/database');
-const multer =require('multer');
+
 
 mongoose.connect(config.database);
 
@@ -24,7 +24,11 @@ var router = express.Router();
 app.use('/api', router);
 
 const users=require('./routes/users');
+<<<<<<< HEAD
 const rooms = require('./routes/rooms');
+=======
+
+>>>>>>> aa075593ce2af7afbc956f3cddace388588c398c
 
 //Port number
 const port =6600;
@@ -53,17 +57,5 @@ app.listen(port, function(){
     console.log('Server started on port '+port);
 });
 
-//file upload
 
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
-
-app.post("/upload", multer({dest: "./uploads/"}).array("uploads", 12), function(req, res) {
-    res.send(req.files);
-});
 

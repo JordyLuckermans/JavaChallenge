@@ -9,7 +9,8 @@ const reservationSchema= new mongoose.Schema({
         required:true
     },
     user:{
-        type:String
+        type:String,
+        required:true
 
     },
     starttime:{
