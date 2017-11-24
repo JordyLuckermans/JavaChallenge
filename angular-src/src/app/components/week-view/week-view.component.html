@@ -1,0 +1,12 @@
+<table style="width: 100%">
+  <tr>
+    <th></th>
+    <th>zaal</th>
+  </tr>
+  <tr *ngFor="let i of this.indexes">
+    <td style="white-space: nowrap; width: 5%">{{this.weekDays[i]}}</td>
+    <td>
+      <app-timeline [reservationsDay]="this.reservations[i]"></app-timeline>
+    </td>
+  </tr>
+</table>
