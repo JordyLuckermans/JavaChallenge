@@ -3,54 +3,24 @@
 var mongoose = require('mongoose');
 var Room = mongoose.model('Room');
 
-exports.getAllRooms = function (req, res) {
-    Room.find({}, function (err, rooms) {
-        if (err) {
-            res.json(err);
-        }
-        res.json(rooms);
-    });
+exports.getAllRooms = function (req, callback) {
+    Room.find({}, callback);
 };
 
-exports.getRoomById = function (req, res) {
-    Room.findById({_id: req.params.id}, function (err, room) {
-        if (err) {
-            res.json(err);
-        }
-        res.json(room);
-    });
+exports.getRoomById = function (req, callback) {
+    Room.findById({_id: req.params.id}, callback);
 };
 
-exports.addRoom = function (req, res) {
+exports.addRoom = function (req, callback) {
     const newRoom = new Room(req.body);
-
-    newRoom.save(function (err, room) {
-        if (err) {
-            res.json({success: false, msg: 'Failed to create room'});
-        } else {
-            res.json({success: true, msg: 'Room created'});
-        }
-    });
+    newRoom.save(callback);
 };
 
-exports.updateRoom = function (req, res) {
+exports.updateRoom = function (req, callback) {
     const newRoom = new Room(req.body);
-
-    Room.update({_id: req.params.id}, newRoom,function (err, room) {
-        if (err) {
-            res.json({success: false, msg: 'Failed to update room'});
-        } else {
-            res.json({success: true, msg: 'Room updated'});
-        }
-    });
+    Room.update({_id: req.params.id}, newRoom,callback);
 };
 
-exports.deleteRoom = function (req, res) {
-    Room.remove({_id: req.params.id}, function (err, room) {
-        if (err) {
-            res.json({success: false, msg: 'Failed to remove room'});
-        } else {
-            res.json({success: true, msg: 'Room removed'});
-        }
-    });
+exports.deleteRoom = function (req, callback) {
+    Room.remove({_id: req.params.id}, callback);
 };

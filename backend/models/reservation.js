@@ -25,12 +25,10 @@ const reservationSchema= new mongoose.Schema({
         type:String,
         required:true
     },
-    status: {
-        type: [{
-            type: String,
-            array: ['Vrij', 'In afwachting', 'Gereserveerd']
-        }],
-        default: ['Vrij']
+    isConfirmed: {
+        type: Boolean,
+        default: false,
+        required: true
     },
     comment:{
         type:String,

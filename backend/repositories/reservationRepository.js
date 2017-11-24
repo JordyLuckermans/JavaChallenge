@@ -3,64 +3,32 @@
 var mongoose = require('mongoose');
 var Reservation = mongoose.model('Reservation');
 
-exports.getAllReservations = function (req, res) {
-    Reservation.find({}, function (err, reservations) {
-        if (err) {
-            res.json(err);
-        }
-        res.json(reservations);
-    });
+exports.getAllReservations = function (req, callback) {
+    Reservation.find({}, callback);
 };
 
-exports.getReservationById = function (req, res) {
-    Reservation.findById({_id: req.params.id}, function (err, reservation) {
-        if (err) {
-            res.json(err);
-        }
-        res.json(reservation);
-    });
+exports.getReservationById = function (req, callback) {
+    Reservation.findById({_id: req.params.id}, callback);
 };
 
-exports.addReservation = function (req, res) {
+exports.addReservation = function (req, callback) {
     const newReservation = new Reservation(req.body);
-
-    newReservation.save(function (err, reservation) {
-        if (err) {
-            res.json({success: false, msg: 'Failed to create reservation'});
-        } else {
-            res.json({success: true, msg: 'Reservation created'});
-        }
-    });
+    newReservation.save(callback);
 };
 
-exports.updateReservation = function (req, res) {
+exports.updateReservation = function (req, callback) {
     const newReservation = new Reservation(req.body);
-
-    Reservation.update({_id: req.params.id}, newReservation,function (err, reservation) {
-        if (err) {
-            res.json({success: false, msg: 'Failed to update reservation'});
-        } else {
-            res.json({success: true, msg: 'Reservation updated'});
-        }
-    });
+    Reservation.update({_id: req.params.id}, newReservation,callback);
 };
 
-exports.deleteReservation = function (req, res) {
-    Reservation.remove({_id: req.params.id}, function (err, reservation) {
-        if (err) {
-            res.json({success: false, msg: 'Failed to remove reservation'});
-        } else {
-            res.json({success: true, msg: 'Reservation removed'});
-        }
-    });
+exports.deleteReservation = function (req, callback) {
+    Reservation.remove({_id: req.params.id}, callback);
 };
 
-exports.changeReservationStatus = function (req, res, status) {
-    Reservation.update({_id: req.body._id}, {status: status}, function (err, reservation) {
-        if (err) {
-            res.json({success: false, msg: 'Failed to change reservation status'});
-        } else {
-            res.json({success: true, msg: 'Reservation status updated'});
-        }
-    })
+exports.changeReservationStatus = function (req, status, callback) {
+    Reservation.update({_id: req.body._id}, {status: status}, callback)
+};
+
+exports.getReservationsByIsConfirmed = function (req, isConfirmed, callback) {
+    Reservation.find({isConfirmed: isConfirmed}, callback);
 };

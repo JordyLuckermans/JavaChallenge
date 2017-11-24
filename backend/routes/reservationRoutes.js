@@ -7,6 +7,12 @@ module.exports = function(app) {
         .get(ReservationController.getAllReservations)
         .post(ReservationController.addReservation);
 
+    app.route('/reservations/confirmed')
+        .get(ReservationController.getConfirmedReservations);
+
+    app.route('/reservations/unconfirmed')
+        .get(ReservationController.getUnconfirmedReservations);
+
     app.route('/reservations/:id')
         .get(ReservationController.getReservationById)
         .delete(ReservationController.deleteReservation)
@@ -16,5 +22,5 @@ module.exports = function(app) {
         .patch(ReservationController.confirmReservation);
 
     app.route('/reservations/:id/deny')
-        .patch(ReservationController.denyReservation);
+        .patch(ReservationController.deleteReservation);
 };
