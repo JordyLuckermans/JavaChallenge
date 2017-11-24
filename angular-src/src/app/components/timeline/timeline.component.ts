@@ -1,6 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Timestamp} from "rxjs/Rx";
-import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: 'app-timeline',
