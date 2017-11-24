@@ -19,6 +19,7 @@ import { TimelineComponent } from './components/timeline/timeline.component';
 import { TimelinesComponent } from './components/timelines/timelines.component';
 import { WeekViewComponent } from './components/week-view/week-view.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { OverviewRoomsComponent } from './components/overview-rooms/overview-rooms.component';
 
 const appRoutes:Routes=[
 
@@ -26,6 +27,7 @@ const appRoutes:Routes=[
   {path:'register',component:RegisterComponent},
   {path:'login',component:LoginComponent},
   {path:'timeline',component:TimelinesComponent},
+  {path:'overviewRooms',component:OverviewRoomsComponent},
   {path:'dashboard',component:DashboardComponent,canActivate:[AuthGuard]},
   {path:'profile',component:ProfileComponent,canActivate:[AuthGuard]},
 ]
@@ -42,6 +44,7 @@ const appRoutes:Routes=[
     TimelinesComponent,
     WeekViewComponent,
     FooterComponent,
+    OverviewRoomsComponent,
   ],
   imports: [
     BrowserModule,
