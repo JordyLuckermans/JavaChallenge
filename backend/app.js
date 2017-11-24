@@ -24,11 +24,7 @@ var router = express.Router();
 app.use('/api', router);
 
 const users=require('./routes/users');
-<<<<<<< HEAD
 const rooms = require('./routes/rooms');
-=======
-
->>>>>>> aa075593ce2af7afbc956f3cddace388588c398c
 
 //Port number
 const port =6600;
