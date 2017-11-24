@@ -20,11 +20,16 @@ mongoose.connection.on('error',function(err){
 const app=express();
 var router = express.Router();
 
+var Room = require('./models/room'); //created model loading here
+
+// mongoose instance connection url connection
+mongoose.Promise = global.Promise;
+
 // Defaut route: alle routes beginnen bij /api/
 app.use('/api', router);
 
 const users=require('./routes/users');
-const rooms = require('./routes/rooms');
+var roomRoutes = require('./routes/roomRoutes');
 
 //Port number
 const port =6600;
@@ -41,7 +46,9 @@ app.use(passport.session());
 require('./config/passport')(passport);
 
 app.use('/users',users);
-app.use('/rooms', rooms);
+//app.use('/rooms', roomRoutes);
+
+roomRoutes(app);
 
 //index route
 router.get('/', function(req, res){
