@@ -26,4 +26,11 @@ export class ValidateService {
     const re = /\b\d{9,10}?\b/;
     return re.test(phone);
   }
+
+  validateReservation(reservation){
+    if(reservation.room == undefined || reservation.user == undefined || reservation.starttime == undefined || reservation.endtime == undefined || reservation.motivation == undefined){
+      return false;
+    }
+    return true;
+  }
 }

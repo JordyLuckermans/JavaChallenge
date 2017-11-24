@@ -21,3 +21,13 @@ exports.updateReservation = function (req, res) {
 exports.deleteReservation = function (req, res) {
     ReservationRepository.deleteReservation(req, res);
 };
+
+// Extra functions
+
+exports.confirmReservation = function (req, res) {
+    ReservationRepository.changeReservationStatus(req, res, 'Gereserveerd');
+};
+
+exports.denyReservation = function(req, res){
+    ReservationRepository.changeReservationStatus(req, res, 'Vrij');
+}
