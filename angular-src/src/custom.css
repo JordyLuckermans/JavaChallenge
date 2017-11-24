@@ -29,3 +29,7 @@
     -webkit-box-shadow: 0 0 0 0.2rem rgba(50, 93, 136, 0.5);
     box-shadow: 0 0 0 0.2rem rgba(50, 93, 136, 0.5);
 }
+
+footer, app-navbar, .navbar{
+    background-color: #2A2A2A;
+}
