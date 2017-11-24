@@ -33,4 +33,16 @@ export class ValidateService {
     }
     return true;
   }
+
+  validateDate(date){
+    if(isNaN(Date.parse(date.toString()))){
+      return false;
+    }
+    return true;
+  }
+
+  validateTime(time){
+    const re = /\b([01]?[0-9]|2[0-3]):[0-5][0-9]\b/;
+    return re.test(time);
+  }
 }
