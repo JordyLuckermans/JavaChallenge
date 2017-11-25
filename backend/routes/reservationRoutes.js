@@ -2,16 +2,17 @@
 
 module.exports = function(app) {
     var ReservationController = require('../controllers/reservationController');
+    var AuthHelper = require('../helpers/authHelper');
 
     app.route('/reservations')
         .get(ReservationController.getAllReservations)
         .post(ReservationController.addReservation);
 
     app.route('/reservations/confirmed')
-        .get(ReservationController.getConfirmedReservations);
+        .get(AuthHelper.loginRequired, ReservationController.getConfirmedReservations);
 
     app.route('/reservations/unconfirmed')
-        .get(ReservationController.getUnconfirmedReservations);
+        .get(AuthHelper.adminRequired, ReservationController.getUnconfirmedReservations);
 
     app.route('/reservations/:id')
         .get(ReservationController.getReservationById)
