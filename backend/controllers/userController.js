@@ -9,7 +9,7 @@ const jwt=require('jsonwebtoken');
 exports.getAllUsers = function (req, res) {
     UserRepository.getAllUsers(req, function (err, users) {
         if (err) {
-            res.json(err);
+            res.status(500).json({success: false, msg: 'Failed to get users', error:err});
         }
         res.json(users);
     });
@@ -25,7 +25,7 @@ exports.registerUser = function (req, res) {
             req.body.password = hash;
             UserRepository.addUser(req, function (err, user) {
                 if (err) {
-                    res.json({success: false, msg: 'Failed to create user'});
+                    res.status(500).json({success: false, msg: 'Failed to create user', error:err});
                 } else {
                     res.json({success: true, msg: 'User created'});
                 }
@@ -39,13 +39,17 @@ exports.authenticateUser = function (req, res) {
     const password = req.body.password;
 
     UserRepository.getUserByUsername(username, function (err, user) {
-        if (err) throw err;
+        if (err) {
+            return res.status(500).json({success: false, msg: 'Failed to get user', error:err});
+        }
         if (!user) {
-            return res.json({success: false, msg: 'User not found'});
+            return res.status(404).json({success: false, msg: 'User not found'});
         }
 
         comparePassword(password, user.password, function (err, isMatch) {
-            if (err) throw err;
+            if (err)  {
+                return res.status(500).json({success: false, msg: 'Failed to match passwords', error:err});
+            }
             if (isMatch) {
                 const token = jwt.sign({data: user}, config.secret, {
                     expiresIn: 604800
@@ -64,7 +68,7 @@ exports.authenticateUser = function (req, res) {
                 });
             }
             else {
-                return res.json({success: false, msg: 'Wrong password'});
+                return res.status(403).json({success: false, msg: 'Wrong password'});
             }
         });
     });
