@@ -27,7 +27,7 @@ export class ReservationService {
       .map((res: Response) => {
         const result = res.json();
         let parsedReservations:Reservation[] = [];
-        for(let res in result.obj){
+        for(let res of result.obj){
           parsedReservations.push(this.objToReservation(res));
         }
        this.reservations = parsedReservations;
