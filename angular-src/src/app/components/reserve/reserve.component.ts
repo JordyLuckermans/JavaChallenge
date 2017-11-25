@@ -3,6 +3,9 @@ import {Router} from '@angular/router';
 import {AuthService} from "../../services/auth.service";
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {ValidateService} from "app/services/validate.service";
+import {RoomService} from "../../services/room.service";
+import {Room} from "../../models/room.model";
+import {ReservationService} from "../../services/reservation.service";
 
 @Component({
   selector: 'app-reserve',
@@ -17,14 +20,28 @@ export class ReserveComponent implements OnInit {
   endtime: String;
   motivation: String;
   comment: String;
-  
+
+  rooms: Room[];
+
+
+
   constructor(private validateService: ValidateService,
-              private authService: AuthService,
-              private router: Router,
-              private flashMessage: FlashMessagesService) {
+              private flashMessage: FlashMessagesService,
+              private roomService: RoomService,
+              private reservationService: ReservationService) {
+
+    roomService.getRooms().subscribe(
+      res => console.log(res),
+      err => console.log(err)
+    );
   }
 
   ngOnInit() {
+      this.roomService.getRooms().subscribe(
+        (rooms: Room[]) => {
+          this.rooms = rooms;
+        }
+      )
   }
 
   onReserveSubmit() {
@@ -74,5 +91,13 @@ export class ReserveComponent implements OnInit {
 
       return false;
     }
+
+    this.reservationService.confirmReservation(reservation).subscribe(data => {
+      if(data.success){
+        alert("success");
+      } else {
+        alert("fail");
+      }
+    });
   }
 }
