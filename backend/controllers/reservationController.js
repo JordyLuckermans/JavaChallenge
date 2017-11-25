@@ -20,28 +20,48 @@ exports.getReservationById = function (req, res) {
     });
 };
 
+Object.size = function (obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
+
 exports.addReservation = function (req, res) {
-    checkAvailability(req, res,
-        ReservationRepository.addReservation(req, function (err, reservation) {
-            if (err) {
-                res.json({success: false, msg: 'Failed to create reservation'});
-            } else {
-                res.json({success: true, msg: 'Reservation created'});
-            }
-        })
-    );
+    ReservationRepository.getReservationsByRoomAndTimeframe(req, function (err, reservations) {
+        if (err) {
+            res.json({success: false, msg: 'Failed to check availability'})
+        } else if (Object.size(reservations) !== 0) {
+            res.json({success: false, msg: 'Room not available for reservation'})
+        } else {
+            ReservationRepository.addReservation(req, function (err, reservation) {
+                if (err) {
+                    res.json({success: false, msg: 'Failed to create reservation'});
+                } else {
+                    res.json({success: true, msg: 'Reservation created'});
+                }
+            });
+        }
+    });
 };
 
 exports.updateReservation = function (req, res) {
-    checkAvailability(req, res,
-        ReservationRepository.updateReservation(req, function (err, reservation) {
-            if (err) {
-                res.json({success: false, msg: 'Failed to update reservation'});
-            } else {
-                res.json({success: true, msg: 'Reservation updated'});
-            }
-        })
-    );
+    ReservationRepository.getReservationsByRoomAndTimeframe(req, function (err, reservations) {
+        if (err) {
+            res.json({success: false, msg: 'Failed to check availability'})
+        } else if (Object.size(reservations) !== 0) {
+            res.json({success: false, msg: 'Room not available for reservation'})
+        } else {
+            ReservationRepository.updateReservation(req, function (err, reservation) {
+                if (err) {
+                    res.json({success: false, msg: 'Failed to update reservation'});
+                } else {
+                    res.json({success: true, msg: 'Reservation updated'});
+                }
+            });
+        }
+    });
 };
 
 exports.deleteReservation = function (req, res) {
@@ -82,15 +102,3 @@ exports.getConfirmedReservations = function (req, res) {
         res.json(reservations);
     });
 };
-
-const checkAvailability = function (req, res, addOrUpdate) {
-    ReservationRepository.getReservationsByRoomAndTimeframe(req, function (err, reservations) {
-        if (err) {
-            res.json({success: false, msg: 'Failed to check availability'})
-        } else if (reservations.size > 0) {
-            res.json({success: false, msg: 'Room not available for reservation'})
-        } else if (reservations.size === 0) {
-            addOrUpdate();
-        }
-    });
-}

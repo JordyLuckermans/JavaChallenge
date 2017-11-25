@@ -36,22 +36,26 @@ exports.getReservationsByIsConfirmed = function (req, isConfirmed, callback) {
 exports.getReservationsByRoomAndTimeframe = function (req, callback) {
     const newReservation = new Reservation(req.body);
     Reservation.find({
-            $and: [
-                {room: newReservation.room}, {
-                    $or: [
-                        {
-                            $and: [{starttime: {$lt: newReservation.starttime}},
-                                {endtime: {$gt: newReservation.starttime}}]
-                        },
-                        {
-                            $and: [{starttime: {$lt: newReservation.endtime}},
-                                {endtime: {$gt: newReservation.endtime}}]
-                        },
-                        {
-                            $and: [{starttime: {$lt: newReservation.starttime}},
-                                {endtime: {$gt: newReservation.endtime}}]
-                        }]
-                }
-            ]
-        }, callback);
+        $and: [
+            {room: newReservation.room},
+            {
+                $or: [
+                    {
+                        $and: [{endtime: {$gt: newReservation.starttime}},
+                            {endtime: {$lt: newReservation.endtime}}]
+                    },
+                    {
+                        $and: [{starttime: {$gt: newReservation.starttime}},
+                            {starttime: {$lt: newReservation.endtime}}]
+                    },
+                    {
+                        $and: [{starttime: {$lt: newReservation.starttime}},
+                            {endtime: {$gt: newReservation.endtime}}]
+                    },
+                    {starttime: newReservation.starttime},
+                    {endtime: newReservation.endtime}
+                ]
+            }
+        ]
+    }, callback)
 };
