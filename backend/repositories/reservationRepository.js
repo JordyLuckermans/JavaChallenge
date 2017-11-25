@@ -41,18 +41,24 @@ exports.getReservationsByRoomAndTimeframe = function (req, callback) {
             {
                 $or: [
                     {
+                        // endtime overlap
                         $and: [{endtime: {$gt: newReservation.starttime}},
                             {endtime: {$lt: newReservation.endtime}}]
                     },
                     {
+                        // starttime overlap
                         $and: [{starttime: {$gt: newReservation.starttime}},
                             {starttime: {$lt: newReservation.endtime}}]
                     },
                     {
+                        // full overlap
                         $and: [{starttime: {$lt: newReservation.starttime}},
                             {endtime: {$gt: newReservation.endtime}}]
                     },
+                    // starttime match
                     {starttime: newReservation.starttime},
+                    
+                    // endtime match
                     {endtime: newReservation.endtime}
                 ]
             }
