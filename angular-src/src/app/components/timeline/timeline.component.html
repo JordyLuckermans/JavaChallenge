@@ -1,25 +1,26 @@
-<svg viewBox="-.5 .1 14 2">
+<svg viewBox="-.5 .15 14 1.5">
   <style>
     rect{ box-sizing: border-box; }
     text{ font-size: 0.3px }
     line{ stroke: #555; stroke-width: 0.03px }
     g > text{ text-anchor: middle }
-    line.g{ stroke: #AAA }
+    line.g{ stroke: rgba(0,0,0,.3) }
+    rect.res{ stroke: #000; stroke-width: 0.02; fill: #CEB549 }
   </style>
+  <svg:rect x="0" y="0.5" width="13" height="1"
+            style="stroke: #000;stroke-width:0.02; fill:none;"/>
+  <!--acual reservations-->
+  <svg:rect *ngFor="let r of this.svgRects" attr.x="{{r[0]}}" y="0.5" attr.width="{{r[1]}}" height="1"
+            class="res"/>
   <svg:g *ngFor="let i of this.indexes"> <!--for each hour-->
     <svg:text attr.x="{{this.xlocations[i]}}" y="0.5">{{this.times[i]}}</svg:text>
     <!--lines hours-->
-    <svg:line attr.x1="{{this.xlocations[i]}}" y1="0.5" attr.x2="{{this.xlocations[i]}}" y2="2"/>
+    <svg:line attr.x1="{{this.xlocations[i]}}" y1="0.5" attr.x2="{{this.xlocations[i]}}" y2="1.5"/>
     <!--lines quarter of an hour-->
-    <svg:line class="g" attr.x1="{{this.xlocations[i] + 0.25}}" y1="0.5" attr.x2="{{this.xlocations[i]+ 0.25}}" y2="2"/>
-    <svg:line class="g" attr.x1="{{this.xlocations[i] + 0.5}}" y1="0.5" attr.x2="{{this.xlocations[i] + 0.5}}" y2="2"/>
-    <svg:line class="g" attr.x1="{{this.xlocations[i] + 0.75}}" y1="0.5" attr.x2="{{this.xlocations[i]+ 0.75}}" y2="2"/>
+    <svg:line class="g" attr.x1="{{this.xlocations[i] + 0.25}}" y1="0.5" attr.x2="{{this.xlocations[i]+ 0.25}}" y2="1.5"/>
+    <svg:line class="g" attr.x1="{{this.xlocations[i] + 0.5}}" y1="0.5" attr.x2="{{this.xlocations[i] + 0.5}}" y2="1.5"/>
+    <svg:line class="g" attr.x1="{{this.xlocations[i] + 0.75}}" y1="0.5" attr.x2="{{this.xlocations[i]+ 0.75}}" y2="1.5"/>
   </svg:g>
-  <svg:rect x="0" y="0.5" width="13" height="1.5"
-            style="stroke: #000;stroke-width:0.02; fill:none;"/>
   <!--hide last lines-->
   <svg:rect x="13.2" y="0.5" fill="white" width="1" height="1.5"/>
-  <!--acual reservations-->
-  <svg:rect *ngFor="let r of this.svgRects" attr.x="{{r[0]}}" y="0.75" attr.width="{{r[1]}}" height="1"
-            style="stroke: #000;stroke-width:0.02; fill:#080;"/>
 </svg>
