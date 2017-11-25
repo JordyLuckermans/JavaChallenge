@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import {RouterModule, Routes} from '@angular/router';
+import { RouterModule, Routes} from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
@@ -19,10 +19,10 @@ import { WeekViewComponent } from './components/week-view/week-view.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { OverviewRoomsComponent } from './components/overview-rooms/overview-rooms.component';
 import { ReserveComponent} from "./components/reserve/reserve.component";
-import {ReservationService} from "./services/reservation.service";
+import { ReservationService} from "./services/reservation.service";
 import { EditRoomComponent } from './components/edit-room/edit-room.component';
 import { DummieDataComponent } from './components/dummie-data/dummie-data.component';
-import {RoomService} from "./services/room.service";
+import { RoomService} from "./services/room.service";
 
 const appRoutes:Routes=[
   {path:'',component:HomeComponent},

@@ -20,8 +20,8 @@ export class RoomService {
       .map((res: Response) => {
         const result = res.json();
         let parsedRooms: Room[] = [];
-        for (let res in result.obj) {
-          parsedRooms.push(this.objToRoom(res));
+        for (let room of result) {
+          parsedRooms.push(this.objToRoom(room));
         }
         this.rooms = parsedRooms;
       })
