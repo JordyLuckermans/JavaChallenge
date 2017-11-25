@@ -13,6 +13,7 @@ const Reservation = require('./models/reservation');
 const userRoutes = require('./routes/userRoutes');
 const roomRoutes = require('./routes/roomRoutes');
 const reservationRoutes = require('./routes/reservationRoutes');
+const jsonwebtoken = require("jsonwebtoken");
 require('./config/passport')(passport);
 
 //Port number
@@ -28,8 +29,19 @@ mongoose.connection.on('error', function (err) {
     console.log('Database error: ' + err);
 });
 
-// mongoose instance connection url connection
-//mongoose.Promise = global.Promise;
+app.use(function (req, res, next) {
+    if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
+        jsonwebtoken.verify(req.headers.authorization.split(' ')[1], config.secret, function (err, decode) {
+            if (err) req.user = undefined;
+            req.user = decode;
+            console.log(decode);
+            next();
+        });
+    } else {
+        req.user = undefined;
+        next();
+    }
+});
 
 // Defaut route: alle routes beginnen bij /api/
 // TODO: fix this

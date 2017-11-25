@@ -56,7 +56,7 @@ exports.authenticateUser = function (req, res) {
                 });
                 res.json({
                     success: true,
-                    token: 'JWT ' + token,
+                    token: 'JWT ' + token/*,
                     user: {
                         id: user._id,
                         name: user.name,
@@ -64,7 +64,7 @@ exports.authenticateUser = function (req, res) {
                         email: user.email,
                         phoneNumber: user.phoneNumber,
                         isAdmin: user.isAdmin
-                    }
+                    }*/
                 });
             }
             else {
