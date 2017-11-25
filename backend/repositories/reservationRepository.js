@@ -57,7 +57,7 @@ exports.getReservationsByRoomAndTimeframe = function (req, callback) {
                     },
                     // starttime match
                     {starttime: newReservation.starttime},
-                    
+
                     // endtime match
                     {endtime: newReservation.endtime}
                 ]

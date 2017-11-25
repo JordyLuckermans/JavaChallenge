@@ -5,7 +5,7 @@ var RoomRepository = require('../repositories/roomRepository');
 exports.getAllRooms = function (req, res) {
     RoomRepository.getAllRooms(req, function (err, rooms) {
         if (err) {
-            res.json(err);
+            res.status(500).json({success: false, msg: 'Failed to get rooms', error:err});
         }
         res.json(rooms);
     });
@@ -14,7 +14,7 @@ exports.getAllRooms = function (req, res) {
 exports.getRoomById = function (req, res) {
     RoomRepository.getRoomById(req, function (err, room) {
         if (err) {
-            res.json(err);
+            res.status(500).json({success: false, msg: 'Failed to get room', error:err});
         }
         res.json(room);
     });
@@ -23,7 +23,7 @@ exports.getRoomById = function (req, res) {
 exports.addRoom = function (req, res) {
     RoomRepository.addRoom(req, function (err, room) {
         if (err) {
-            res.json({success: false, msg: 'Failed to create room'});
+            res.status(500).json({success: false, msg: 'Failed to create room', error:err});
         } else {
             res.json({success: true, msg: 'Room created'});
         }
@@ -33,7 +33,7 @@ exports.addRoom = function (req, res) {
 exports.updateRoom = function (req, res) {
     RoomRepository.updateRoom(req, function (err, room) {
         if (err) {
-            res.json({success: false, msg: 'Failed to update room'});
+            res.status(500).json({success: false, msg: 'Failed to update room', error:err});
         } else {
             res.json({success: true, msg: 'Room updated'});
         }
@@ -43,7 +43,7 @@ exports.updateRoom = function (req, res) {
 exports.deleteRoom = function (req, res) {
     RoomRepository.deleteRoom(req, function (err, room) {
         if (err) {
-            res.json({success: false, msg: 'Failed to remove room'});
+            res.status(500).json({success: false, msg: 'Failed to remove room', error:err});
         } else {
             res.json({success: true, msg: 'Room removed'});
         }
