@@ -21,6 +21,8 @@ import { OverviewRoomsComponent } from './components/overview-rooms/overview-roo
 import { ReserveComponent} from "./components/reserve/reserve.component";
 import {ReservationService} from "./services/reservation.service";
 import { EditRoomComponent } from './components/edit-room/edit-room.component';
+import { DummieDataComponent } from './components/dummie-data/dummie-data.component';
+import {RoomService} from "./services/room.service";
 
 const appRoutes:Routes=[
   {path:'',component:HomeComponent},
@@ -32,7 +34,8 @@ const appRoutes:Routes=[
   /*{path:'dashboard',component:DashboardComponent,canActivate:[AuthGuard]},
   {path:'profile',component:ProfileComponent,canActivate:[AuthGuard]},*/
   {path:'reserve', component:ReserveComponent},
-]
+  {path:'dummie', component:DummieDataComponent},
+];
 
 @NgModule({
   declarations: [
@@ -48,6 +51,7 @@ const appRoutes:Routes=[
     OverviewRoomsComponent,
     ReserveComponent,
     EditRoomComponent,
+    DummieDataComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,7 +64,8 @@ const appRoutes:Routes=[
     ValidateService,
     AuthService,
     AuthGuard,
-    ReservationService
+    ReservationService,
+    RoomService
   ],
   bootstrap: [AppComponent]
 })
