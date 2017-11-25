@@ -21,23 +21,27 @@ exports.getReservationById = function (req, res) {
 };
 
 exports.addReservation = function (req, res) {
-    ReservationRepository.addReservation(req, function (err, reservation) {
-        if (err) {
-            res.json({success: false, msg: 'Failed to create reservation'});
-        } else {
-            res.json({success: true, msg: 'Reservation created'});
-        }
-    });
+    checkAvailability(req, res,
+        ReservationRepository.addReservation(req, function (err, reservation) {
+            if (err) {
+                res.json({success: false, msg: 'Failed to create reservation'});
+            } else {
+                res.json({success: true, msg: 'Reservation created'});
+            }
+        })
+    );
 };
 
 exports.updateReservation = function (req, res) {
-    ReservationRepository.updateReservation(req, function (err, reservation) {
-        if (err) {
-            res.json({success: false, msg: 'Failed to update reservation'});
-        } else {
-            res.json({success: true, msg: 'Reservation updated'});
-        }
-    });
+    checkAvailability(req, res,
+        ReservationRepository.updateReservation(req, function (err, reservation) {
+            if (err) {
+                res.json({success: false, msg: 'Failed to update reservation'});
+            } else {
+                res.json({success: true, msg: 'Reservation updated'});
+            }
+        })
+    );
 };
 
 exports.deleteReservation = function (req, res) {
@@ -62,7 +66,7 @@ exports.confirmReservation = function (req, res) {
 };
 
 exports.getUnconfirmedReservations = function (req, res) {
-    ReservationRepository.getReservationsByIsConfirmed(req, false, function(err, reservations){
+    ReservationRepository.getReservationsByIsConfirmed(req, false, function (err, reservations) {
         if (err) {
             res.json(err);
         }
@@ -71,10 +75,22 @@ exports.getUnconfirmedReservations = function (req, res) {
 };
 
 exports.getConfirmedReservations = function (req, res) {
-    ReservationRepository.getReservationsByIsConfirmed(req, true, function(err, reservations){
+    ReservationRepository.getReservationsByIsConfirmed(req, true, function (err, reservations) {
         if (err) {
             res.json(err);
         }
         res.json(reservations);
     });
 };
+
+const checkAvailability = function (req, res, addOrUpdate) {
+    ReservationRepository.getReservationsByRoomAndTimeframe(req, function (err, reservations) {
+        if (err) {
+            res.json({success: false, msg: 'Failed to check availability'})
+        } else if (reservations.size > 0) {
+            res.json({success: false, msg: 'Room not available for reservation'})
+        } else if (reservations.size === 0) {
+            addOrUpdate();
+        }
+    });
+}
