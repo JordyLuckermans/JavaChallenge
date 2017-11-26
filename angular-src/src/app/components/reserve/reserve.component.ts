@@ -5,6 +5,7 @@ import {FlashMessagesService} from 'angular2-flash-messages';
 import {ValidateService} from "app/services/validate.service";
 import {RoomService} from "../../services/room.service";
 import {ReservationService} from "../../services/reservation.service";
+import {Room} from "../../models/room.model";
 
 @Component({
   selector: 'app-reserve',
@@ -37,8 +38,11 @@ export class ReserveComponent implements OnInit {
     }
 
     this.roomService.getRooms().subscribe(
-      res => this.rooms = this.roomService.rooms,
-      err => console.log(err)
+      (rooms: Room[]) => {
+        this.rooms = rooms;
+      }
+      //res=>console.log(this.roomService.rooms),
+      //err=>console.error(err),
     );
 
 
