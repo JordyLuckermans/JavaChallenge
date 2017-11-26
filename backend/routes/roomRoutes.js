@@ -6,12 +6,12 @@ module.exports = function (app) {
 
     app.route('/rooms')
         .get(RoomController.getAllRooms)
-        .post(AuthHelper.adminRequired,RoomController.addRoom);//check
+        .post(AuthHelper.adminRequired, RoomController.addRoom);
 
     app.route('/rooms/:id')
         .get(RoomController.getRoomById)
-        .delete(AuthHelper.adminRequired,RoomController.deleteRoom)//check
-        .put(AuthHelper.adminRequired,RoomController.updateRoom);//check
+        .delete(AuthHelper.adminRequired, RoomController.deleteRoom)
+        .put(AuthHelper.adminRequired, RoomController.updateRoom);
 
     app.route('/rooms/reservations/:from/:to')
         .get(RoomController.getAllRoomsWithReservationsByTimespan);
