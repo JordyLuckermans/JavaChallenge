@@ -3,22 +3,21 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
-exports.getAllUsers = function (req, callback) {
-    User.find({}, callback);
+exports.getAllUsers = function (req) {
+    return User.find({});
 };
 
-exports.getUserById = function (id, callback) {
-    User.findById(id,callback);
+exports.getUserById = function (id) {
+    return User.findById(id);
 };
 
-exports.getUserByUsername = function (username,callback) {
-   const query={username:username};
-   User.findOne(query,callback);
+exports.getUserByUsername = function (username) {
+    return User.findOne({username:username});
 };
 
-exports.addUser = function (req, callback) {
+exports.addUser = function (req) {
     const newUser = new User(req.body);
-    newUser.save(callback);
+    return newUser.save();
 };
 
 

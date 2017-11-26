@@ -7,11 +7,11 @@ const config=require('../config/database');
 const jwt=require('jsonwebtoken');
 
 exports.getAllUsers = function (req, res) {
-    UserRepository.getAllUsers(req, function (err, users) {
-        if (err) {
-            res.status(500).json({success: false, msg: 'Failed to get users', error:err});
-        }
+    var promise = UserRepository.getAllUsers(req);
+    promise.then(function (users) {
         res.json(users);
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to get users', error:err});
     });
 };
 
@@ -19,18 +19,22 @@ exports.getAllUsers = function (req, res) {
 
 exports.registerUser = function (req, res) {
     const newUser = new User(req.body);
-    bcrypt.genSalt(10, function (err, salt) {
-        bcrypt.hash(newUser.password, salt, function (err, hash) {
-            if (err) throw err;
+    var promise = bcrypt.genSalt(10);
+    promise.then(function (salt) {
+        var promise2 = bcrypt.hash(newUser.password, salt);
+        promise2.then(function (hash) {
             req.body.password = hash;
-            UserRepository.addUser(req, function (err, user) {
-                if (err) {
-                    res.status(500).json({success: false, msg: 'Failed to create user', error:err});
-                } else {
-                    res.json({success: true, msg: 'User created'});
-                }
+            var promise3 = UserRepository.addUser(req);
+            promise3.then(function () {
+                res.json({success: true, msg: 'User created'});
+            }, function (err) {
+                res.status(500).json({success: false, msg: 'Failed to create user', error:err});
             });
+        }, function (err) {
+            res.status(500).json({success: false, msg: 'Failed to create user', error:err});
         });
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to create user', error:err});
     });
 };
 
@@ -38,18 +42,13 @@ exports.authenticateUser = function (req, res) {
     const username = req.body.username;
     const password = req.body.password;
 
-    UserRepository.getUserByUsername(username, function (err, user) {
-        if (err) {
-            return res.status(500).json({success: false, msg: 'Failed to get user', error:err});
-        }
+    var promise = UserRepository.getUserByUsername(username);
+    promise.then(function (user) {
         if (!user) {
             return res.status(404).json({success: false, msg: 'User not found'});
         }
-
-        comparePassword(password, user.password, function (err, isMatch) {
-            if (err)  {
-                return res.status(500).json({success: false, msg: 'Failed to match passwords', error:err});
-            }
+        var promise2 = bcrypt.compare(password, user.password);
+        promise2.then(function (isMatch) {
             if (isMatch) {
                 const token = jwt.sign({data: user}, config.secret, {
                     expiresIn: 604800
@@ -70,18 +69,14 @@ exports.authenticateUser = function (req, res) {
             else {
                 return res.status(403).json({success: false, msg: 'Wrong password'});
             }
+        }, function (err) {
+            return res.status(500).json({success: false, msg: 'Failed to match passwords', error:err});
         });
+    }, function (err) {
+        return res.status(500).json({success: false, msg: 'Failed to get user', error:err});
     });
 };
 
 exports.getProfile = function (req, res) {
     res.json({user:req.user})
-};
-
-// bcrypt functions //
-const comparePassword = function (candidatePassword, hash, callback) {
-    bcrypt.compare(candidatePassword, hash, function (err, isMatch) {
-        if (err) throw err;
-        callback(null, isMatch);
-    });
 };

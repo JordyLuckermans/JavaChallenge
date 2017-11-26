@@ -3,24 +3,24 @@
 var mongoose = require('mongoose');
 var Room = mongoose.model('Room');
 
-exports.getAllRooms = function (req, callback) {
-    Room.find({}, callback);
+exports.getAllRooms = function () {
+    return Room.find({});
 };
 
-exports.getRoomById = function (req, callback) {
-    Room.findById({_id: req.params.id}, callback);
+exports.getRoomById = function (req) {
+    return Room.findById({_id: req.params.id});
 };
 
-exports.addRoom = function (req, callback) {
+exports.addRoom = function (req) {
     const newRoom = new Room(req.body);
-    newRoom.save(callback);
+    return newRoom.save();
 };
 
-exports.updateRoom = function (req, callback) {
+exports.updateRoom = function (req) {
     const newRoom = new Room(req.body);
-    Room.update({_id: req.params.id}, newRoom,callback);
+    return Room.update({_id: req.params.id}, newRoom);
 };
 
-exports.deleteRoom = function (req, callback) {
-    Room.remove({_id: req.params.id}, callback);
+exports.deleteRoom = function (req) {
+    return Room.remove({_id: req.params.id});
 };
