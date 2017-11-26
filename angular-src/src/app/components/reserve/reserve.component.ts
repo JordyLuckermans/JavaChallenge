@@ -41,18 +41,17 @@ export class ReserveComponent implements OnInit {
       (rooms: Room[]) => {
         this.rooms = rooms;
       }
-      //res=>console.log(this.roomService.rooms),
-      //err=>console.error(err),
     );
 
-
-    this.authService.getProfile().subscribe(res => {
-        this.user = res.user;
+    this.authService.getProfile().subscribe(profile=> {
+        this.user = profile.user;
       },
-      err => {
+      err=>{
         console.log(err);
         return false;
       });
+
+    console.info("user", this.user);
   }
 
   onReserveSubmit() {
