@@ -3,39 +3,39 @@
 var mongoose = require('mongoose');
 var Reservation = mongoose.model('Reservation');
 
-exports.getAllReservations = function (req, callback) {
-    Reservation.find({}, callback);
+exports.getAllReservations = function () {
+    return Reservation.find({});
 };
 
-exports.getReservationById = function (req, callback) {
-    Reservation.findById({_id: req.params.id}, callback);
+exports.getReservationById = function (req) {
+    return Reservation.findById({_id: req.params.id});
 };
 
-exports.addReservation = function (req, callback) {
+exports.addReservation = function (req) {
     const newReservation = new Reservation(req.body);
-    newReservation.save(callback);
+    return newReservation.save();
 };
 
-exports.updateReservation = function (req, callback) {
+exports.updateReservation = function (req) {
     const newReservation = new Reservation(req.body);
-    Reservation.update({_id: req.params.id}, newReservation, callback);
+    return Reservation.update({_id: req.params.id}, newReservation);
 };
 
-exports.deleteReservation = function (req, callback) {
-    Reservation.remove({_id: req.params.id}, callback);
+exports.deleteReservation = function (req) {
+    return Reservation.remove({_id: req.params.id});
 };
 
-exports.changeReservationStatus = function (req, isConfirmed, callback) {
-    Reservation.update({_id: req.params.id}, {isConfirmed: isConfirmed}, callback)
+exports.changeReservationStatus = function (req, isConfirmed) {
+    return Reservation.update({_id: req.params.id}, {isConfirmed: isConfirmed})
 };
 
-exports.getReservationsByIsConfirmed = function (req, isConfirmed, callback) {
-    Reservation.find({isConfirmed: isConfirmed}, callback);
+exports.getReservationsByIsConfirmed = function (req, isConfirmed) {
+    return Reservation.find({isConfirmed: isConfirmed});
 };
 
-exports.getReservationsByRoomAndTimeframe = function (req, callback) {
+exports.getReservationsByRoomAndTimeframe = function (req) {
     const newReservation = new Reservation(req.body);
-    Reservation.find({
+    return Reservation.find({
         $and: [
             {room: newReservation.room},
             {
@@ -61,7 +61,10 @@ exports.getReservationsByRoomAndTimeframe = function (req, callback) {
                     // endtime match
                     {endtime: newReservation.endtime}
                 ]
+            }, {
+                // ignore itself (update will be blocked without this)
+                _id: {$ne: newReservation._id}
             }
         ]
-    }, callback)
+    })
 };

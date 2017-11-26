@@ -3,95 +3,93 @@
 var ReservationRepository = require('../repositories/reservationRepository');
 
 exports.getAllReservations = function (req, res) {
-    ReservationRepository.getAllReservations(req, function (err, reservations) {
-        if (err) {
-            res.status(500).json({success: false, msg: 'Failed to get reservations', error:err});
-        }
+    var promise = ReservationRepository.getAllReservations();
+    promise.then(function (reservations) {
         res.json(reservations);
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to get reservations', error:err});
     });
 };
 
 exports.getReservationById = function (req, res) {
-    ReservationRepository.getReservationById(req, function (err, reservation) {
-        if (err) {
-            res.status(500).json({success: false, msg: 'Failed to get reservation', error:err});
-        }
+    var promise = ReservationRepository.getReservationById(req);
+    promise.then(function (reservation) {
         res.json(reservation);
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to get reservation', error:err});
     });
 };
 
 exports.addReservation = function (req, res) {
-    ReservationRepository.getReservationsByRoomAndTimeframe(req, function (err, reservations) {
-        if (err) {
-            res.status(500).json({success: false, msg: 'Failed to check availability', error:err})
-        } else if (Object.size(reservations) !== 0) {
+    var promise = ReservationRepository.getReservationsByRoomAndTimeframe(req);
+    promise.then(function (reservations) {
+        if (Object.size(reservations) !== 0) {
             res.status(403).json({success: false, msg: 'Room not available for reservation'})
         } else {
-            ReservationRepository.addReservation(req, function (err, reservation) {
-                if (err) {
-                    res.status(500).json({success: false, msg: 'Failed to create reservation', error:err});
-                } else {
-                    res.json({success: true, msg: 'Reservation created'});
-                }
+            var promise2 = ReservationRepository.addReservation(req);
+            promise2.then(function () {
+                res.json({success: true, msg: 'Reservation created'});
+            }, function (err) {
+                res.status(500).json({success: false, msg: 'Failed to create reservation', error:err});
             });
         }
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to check availability', error:err});
     });
 };
 
 exports.updateReservation = function (req, res) {
-    ReservationRepository.getReservationsByRoomAndTimeframe(req, function (err, reservations) {
-        if (err) {
-            res.status(500).json({success: false, msg: 'Failed to check availability', error:err})
-        } else if (Object.size(reservations) !== 0) {
+    var promise = ReservationRepository.getReservationsByRoomAndTimeframe(req);
+    promise.then(function (reservations) {
+        if (Object.size(reservations) !== 0) {
             res.status(403).json({success: false, msg: 'Room not available for reservation'})
         } else {
-            ReservationRepository.updateReservation(req, function (err, reservation) {
-                if (err) {
-                    res.status(500).json({success: false, msg: 'Failed to update reservation', error:err});
-                } else {
-                    res.json({success: true, msg: 'Reservation updated'});
-                }
+            var promise2 = ReservationRepository.updateReservation(req);
+            promise2.then(function () {
+                res.json({success: true, msg: 'Reservation updated'});
+            }, function (err) {
+                res.status(500).json({success: false, msg: 'Failed to update reservation', error:err});
             });
         }
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to check availability', error:err});
     });
 };
 
 exports.deleteReservation = function (req, res) {
-    ReservationRepository.deleteReservation(req, function (err, reservation) {
-        if (err) {
-            res.status(500).json({success: false, msg: 'Failed to remove reservation', error:err});
-        } else {
-            res.json({success: true, msg: 'Reservation removed'});
-        }
+    var promise = ReservationRepository.deleteReservation(req);
+    promise.then(function () {
+        res.json({success: true, msg: 'Reservation removed'});
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to remove reservation', error:err});
     });
 };
 
 // Extra functions
 exports.confirmReservation = function (req, res) {
-    ReservationRepository.changeReservationStatus(req, true, function (err, reservation) {
-        if (err) {
-            res.status(500).json({success: false, msg: 'Failed to change reservation status', error:err});
-        } else {
-            res.json({success: true, msg: 'Reservation status updated'});
-        }
+    var promise = ReservationRepository.changeReservationStatus(req, true);
+    promise.then(function () {
+        res.json({success: true, msg: 'Reservation status updated'});
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to change reservation status', error:err});
     });
 };
 
 exports.getUnconfirmedReservations = function (req, res) {
-    ReservationRepository.getReservationsByIsConfirmed(req, false, function (err, reservations) {
-        if (err) {
-            res.status(500).json({success: false, msg: 'Failed to get reservations', error:err});
-        }
+    var promise = ReservationRepository.getReservationsByIsConfirmed(req, false);
+    promise.then(function (reservations) {
         res.json(reservations);
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to get reservations', error:err});
     });
 };
 
 exports.getConfirmedReservations = function (req, res) {
-    ReservationRepository.getReservationsByIsConfirmed(req, true, function (err, reservations) {
-        if (err) {
-            res.status(500).json({success: false, msg: 'Failed to get reservations', error:err});
-        }
+    var promise = ReservationRepository.getReservationsByIsConfirmed(req, true);
+    promise.then(function (reservations) {
         res.json(reservations);
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to get reservations', error:err});
     });
 };
 
