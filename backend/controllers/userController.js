@@ -21,18 +21,16 @@ exports.registerUser = function (req, res) {
     const newUser = new User(req.body);
     var promise = bcrypt.genSalt(10);
     promise.then(function (salt) {
-        var promise2 = bcrypt.hash(newUser.password, salt);
-        promise2.then(function (hash) {
-            req.body.password = hash;
-            var promise3 = UserRepository.addUser(req);
-            promise3.then(function () {
-                res.json({success: true, msg: 'User created'});
-            }, function (err) {
-                res.status(500).json({success: false, msg: 'Failed to create user', error:err});
-            });
-        }, function (err) {
-            res.status(500).json({success: false, msg: 'Failed to create user', error:err});
-        });
+        return bcrypt.hash(newUser.password, salt);
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to create user', error:err});
+    }).then(function (hash) {
+        req.body.password = hash;
+        return UserRepository.addUser(req);
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to create user', error:err});
+    }).then(function () {
+        res.json({success: true, msg: 'User created'});
     }, function (err) {
         res.status(500).json({success: false, msg: 'Failed to create user', error:err});
     });
@@ -41,39 +39,40 @@ exports.registerUser = function (req, res) {
 exports.authenticateUser = function (req, res) {
     const username = req.body.username;
     const password = req.body.password;
+    var user;
 
     var promise = UserRepository.getUserByUsername(username);
-    promise.then(function (user) {
-        if (!user) {
-            return res.status(404).json({success: false, msg: 'User not found'});
+    promise.then(function (usr) {
+        if (!usr) {
+            res.status(404).json({success: false, msg: 'User not found'});
         }
-        var promise2 = bcrypt.compare(password, user.password);
-        promise2.then(function (isMatch) {
-            if (isMatch) {
-                const token = jwt.sign({data: user}, config.secret, {
-                    expiresIn: 604800
-                });
-                res.json({
-                    success: true,
-                    token: 'JWT ' + token,
-                    user: {
-                        id: user._id,
-                        name: user.name,
-                        username: user.username,
-                        email: user.email,
-                        phoneNumber: user.phoneNumber,
-                        isAdmin: user.isAdmin
-                    }
-                });
-            }
-            else {
-                return res.status(403).json({success: false, msg: 'Wrong password'});
-            }
-        }, function (err) {
-            return res.status(500).json({success: false, msg: 'Failed to match passwords', error:err});
-        });
+        user = usr;
+        return bcrypt.compare(password, usr.password);
     }, function (err) {
-        return res.status(500).json({success: false, msg: 'Failed to get user', error:err});
+        res.status(500).json({success: false, msg: 'Failed to get user', error:err});
+    }).then(function (isMatch) {
+        if (isMatch) {
+            const token = jwt.sign({data: user}, config.secret, {
+                expiresIn: 604800
+            });
+            res.json({
+                success: true,
+                token: 'JWT ' + token,
+                user: {
+                    id: user._id,
+                    name: user.name,
+                    username: user.username,
+                    email: user.email,
+                    phoneNumber: user.phoneNumber,
+                    isAdmin: user.isAdmin
+                }
+            });
+        }
+        else {
+            res.status(403).json({success: false, msg: 'Wrong password'});
+        }
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to match passwords', error:err});
     });
 };
 

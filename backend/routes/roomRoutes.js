@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(app) {
+module.exports = function (app) {
     var RoomController = require('../controllers/roomController');
 
     app.route('/rooms')
@@ -11,4 +11,10 @@ module.exports = function(app) {
         .get(RoomController.getRoomById)
         .delete(RoomController.deleteRoom)
         .put(RoomController.updateRoom);
+
+    app.route('/rooms/reservations/:from/:to')
+        .get(RoomController.getAllRoomsWithReservationsByTimespan);
+
+    app.route('/rooms/:id/reservations/:from/:to')
+        .get(RoomController.getRoomWithReservationsByTimespan);
 };

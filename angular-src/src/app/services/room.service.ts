@@ -17,18 +17,11 @@ export class RoomService {
   getRooms() {
     const headers = new Headers({'Content-Type': 'application/json'});
     return this.http.get(this.url + "/rooms", {headers})
-      .map((res: Response) => {
-        const result = res.json();
-        let parsedRooms: Room[] = [];
-        for (let room of result) {
-          parsedRooms.push(this.objToRoom(room));
-        }
-        this.rooms = parsedRooms;
-      })
-      .catch((err: Response) => {
-        console.error(err);
-        return Observable.throw(err);
-      });
+        .map((res: Response) => res.json())
+        .catch((err: Response) => {
+          console.error(err);
+          return Observable.throw(err);
+        });
   }
 
   getRoomById(id) {
