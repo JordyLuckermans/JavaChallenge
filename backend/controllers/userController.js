@@ -44,12 +44,12 @@ exports.authenticateUser = function (req, res) {
     var promise = UserRepository.getUserByUsername(username);
     promise.then(function (usr) {
         if (!usr) {
-            return res.status(404).json({success: false, msg: 'User not found'});
+            res.status(404).json({success: false, msg: 'User not found'});
         }
         user = usr;
         return bcrypt.compare(password, usr.password);
     }, function (err) {
-        return res.status(500).json({success: false, msg: 'Failed to get user', error:err});
+        res.status(500).json({success: false, msg: 'Failed to get user', error:err});
     }).then(function (isMatch) {
         if (isMatch) {
             const token = jwt.sign({data: user}, config.secret, {
@@ -69,10 +69,10 @@ exports.authenticateUser = function (req, res) {
             });
         }
         else {
-            return res.status(403).json({success: false, msg: 'Wrong password'});
+            res.status(403).json({success: false, msg: 'Wrong password'});
         }
     }, function (err) {
-        return res.status(500).json({success: false, msg: 'Failed to match passwords', error:err});
+        res.status(500).json({success: false, msg: 'Failed to match passwords', error:err});
     });
 };
 
