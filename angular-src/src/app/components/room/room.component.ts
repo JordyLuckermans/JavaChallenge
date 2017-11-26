@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewEncapsulation, Input} from '@angular/core';
 import {RoomService} from '../../services/room.service';
 import {Room} from "../../models/room.model";
+import {AuthService} from '../../services/auth.service';
 
 
 @Component({
