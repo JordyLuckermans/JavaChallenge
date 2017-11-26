@@ -41,13 +41,13 @@ export class RegisterComponent implements OnInit {
     }
 
     if (!this.validateService.validateEmail(user.email)) {
-      this.flashMessage.show('Uw email adres is incorrect.', {cssClass: 'alert-danger', timeout: 3000});
+      this.flashMessage.show('Uw e-mail adres is incorrect.', {cssClass: 'alert-danger', timeout: 3000});
 
       return false;
     }
 
     if (!this.validateService.validatePhone(user.phoneNumber)) {
-      this.flashMessage.show('Gebruik aub een telefoonnummer zonder speciale tekens.', {
+      this.flashMessage.show('Vul aub een correct telefoonnummer in.', {
         cssClass: 'alert-danger',
         timeout: 3000
       });
@@ -58,10 +58,10 @@ export class RegisterComponent implements OnInit {
     //register user
     this.authService.registerUser(user).subscribe(data => {
       if (data.success) {
-        this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
+        this.flashMessage.show('U bent geregistreerd en kan nu inloggen.', {cssClass: 'alert-success', timeout: 3000});
         this.router.navigate(['/login']);
       } else {
-        this.flashMessage.show('Something went wrong...Please try again', {cssClass: 'alert-danger', timeout: 3000});
+        this.flashMessage.show('Er is iets mis gegaan, probeer het later nog eens of neem contact met ons op.', {cssClass: 'alert-danger', timeout: 3000});
         this.router.navigate(['/register']);
 
       }

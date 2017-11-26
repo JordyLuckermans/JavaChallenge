@@ -52,8 +52,6 @@ export class AuthService {
     return tokenNotExpired('id_token');
   }
 
-﻿
-
   logout() {
     this.authToken = null;
     this.user = null;
