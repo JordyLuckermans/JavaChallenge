@@ -6,11 +6,17 @@ import {Room} from "../../models/room.model";
     selector: 'app-overview-rooms',
     /*templateUrl: 'overview-rooms.component.html',*/
     template: `
-        <div class="col-md-8 col-md-offset-2">
-        <p>Hallo</p>
-            <app-room [room]=room *ngFor="let room of rooms">
-            </app-room>
+    <h2>Overzicht zalen</h2>
+
+    <p>De volgende zalen stellen wij ter beschikking. Als er een zaal is dat je interesseert kan je meteen de
+    beschikbaarheden nakijken en reserveren.</p>
+    <br/>
+    <div class="container-fluid">
+        <div class="row">
+            <app-room [room]=room *ngFor="let room of rooms"></app-room>
         </div>
+     </div>
+        
 `,
     encapsulation: ViewEncapsulation.None
 })
