@@ -109,7 +109,11 @@ export class WeekViewComponent implements OnInit {
     //loading the same route with defferent params doesn't reload...
     this.router.navigateByUrl('/').then(
       () => {
-        this.router.navigate(['/timeline', {date: this.dateIn}]);
+        if (isNullOrUndefined(this.roomId)) {
+          this.router.navigate(['/timeline', {date: this.dateIn}]);
+        } else {
+          this.router.navigate(['/timeline', {date: this.dateIn, roomId: this.roomId}]);
+        }
       });
   }
 
