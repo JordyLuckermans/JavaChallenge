@@ -4,8 +4,8 @@ import {AuthService} from "../../services/auth.service";
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {ValidateService} from "app/services/validate.service";
 import {RoomService} from "../../services/room.service";
-import {Room} from "../../models/room.model";
 import {ReservationService} from "../../services/reservation.service";
+import {Room} from "../../models/room.model";
 
 @Component({
   selector: 'app-reserve',
@@ -28,22 +28,26 @@ export class ReserveComponent implements OnInit {
               private flashMessage: FlashMessagesService,
               private roomService: RoomService,
               private reservationService: ReservationService,
-              private authService: AuthService) {
-
-    roomService.getRooms().subscribe(
-      res => console.log(res),
-      err => console.log(err)
-    );
+              private authService: AuthService,
+              private router: Router) {
   }
 
   ngOnInit() {
+    if(!this.authService.loggedIn()){
+      this.router.navigate(['/login'])
+    }
+
     this.roomService.getRooms().subscribe(
-      res => this.rooms = this.roomService.rooms,
-      err => console.log(err)
+      (rooms: Room[]) => {
+        this.rooms = rooms;
+      }
+      //res=>console.log(this.roomService.rooms),
+      //err=>console.error(err),
     );
 
-    this.authService.getProfile().subscribe(profile => {
-        this.user = profile.user;
+
+    this.authService.getProfile().subscribe(res => {
+        this.user = res.user;
       },
       err => {
         console.log(err);
@@ -52,20 +56,24 @@ export class ReserveComponent implements OnInit {
   }
 
   onReserveSubmit() {
-    var startDateString = this.date + " " + this.starttime;
-    var endDateString = this.date + " " + this.endtime;
+    let startDateString = this.date + " " + this.starttime;
+    let endDateString = this.date + " " + this.endtime;
 
+    let parsedStartDate = Date.parse(startDateString);
+    let parsedEndDate = Date.parse(endDateString);
 
-    var parsedStartDate = Date.parse(startDateString);
-    var parsedEndDate = Date.parse(endDateString);
-
-    if (!this.validateService.validateDate(startDateString) && !this.validateService.validateDate(endDateString)) {
-      this.flashMessage.show("vul aub een geldige datum en tijdstip in", {cssClass: 'alert-danger', timeout: 3000});
-      console.log("date 1" + parsedStartDate);
-      console.log("date 2" + parsedEndDate);
+    if(!this.validateService.validateDateFormat(this.date)) {
+      this.flashMessage.show("Gebruik aub een datum met formaat dd/mm/jjjj", {cssClass: 'alert-danger', timeout: 3000});
       return false;
     }
 
+    //validation datestring
+    if (!this.validateService.validateDate(startDateString) && !this.validateService.validateDate(endDateString)) {
+      this.flashMessage.show("vul aub een geldige datum en tijdstip in", {cssClass: 'alert-danger', timeout: 3000});
+      return false;
+    }
+
+    //validation time
     if (!this.validateService.validateTime(this.starttime) && !this.validateService.validateTime(this.endtime)) {
       this.flashMessage.show("vul aub een geldig tijdstip in", {cssClass: 'alert-danger', timeout: 3000});
       return false;
@@ -81,6 +89,7 @@ export class ReserveComponent implements OnInit {
       return false;
     }
 
+
     const reservation = {
 
       room: this.room['id'],
@@ -88,25 +97,20 @@ export class ReserveComponent implements OnInit {
       starttime: parsedStartDate,
       endtime: parsedEndDate,
       motivation: this.motivation,
-      status: "In Afwachting",
       comment: this.comment
     }
 
-    console.log(reservation);
-    console.log(this.user);
-    console.log(this.room)
-
     if (!this.validateService.validateReservation(reservation)) {
-      this.flashMessage.show('Vul aub alle velden in.', {cssClass: 'alert-danger', timeout: 3000})
-
+      this.flashMessage.show('Vul aub alle velden in.', {cssClass: 'alert-danger', timeout: 3000});
       return false;
     }
 
     this.reservationService.askReservation(reservation).subscribe(data => {
       if (data.success) {
-        alert("success");
+        this.flashMessage.show('Uw reservering is aangevraagd', {cssClass: 'alert-success', timeout: 3000});
+        this.router.navigate(['']);
       } else {
-        alert("fail");
+        this.flashMessage.show('Er is iets mis gegaan bij het aanmaken van de reservering.', {cssClass: 'alert-danger', timeout: 3000});
       }
     });
   }
