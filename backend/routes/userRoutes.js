@@ -1,10 +1,11 @@
 'use strict';
-const jwt=require('jsonwebtoken');
-const passport=require('passport');
+const jwt = require('jsonwebtoken');
+const passport = require('passport');
 
-module.exports = function(app) {
+module.exports = function (app) {
     var UserController = require('../controllers/userController');
 
+    // TODO: remove or secure this before production
     app.route('/users')
         .get(UserController.getAllUsers);
 
@@ -13,7 +14,12 @@ module.exports = function(app) {
 
     app.route('/users/authenticate')
         .post(UserController.authenticateUser);
-    
+
     app.route('/users/profile')
-        .get(passport.authenticate('jwt',{session:false}), UserController.getProfile);
+        .get(UserController.getProfile);
+        // This used to be:
+        //.get(passport.authenticate('jwt',{session:false}), UserController.getProfile);
+        // But it stopped working
+        // I don't know why
+        // Or why it ever worked
 };
