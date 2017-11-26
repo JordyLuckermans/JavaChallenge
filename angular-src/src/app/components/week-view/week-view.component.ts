@@ -29,7 +29,7 @@ export class WeekViewComponent implements OnInit {
     [],//5
     [],//6
   ];
-  /* = [
+  dummieFallBack = [
 			[ //maa
 				{
 					starttime: new Date(2017, 11, 23, 10),
@@ -51,7 +51,7 @@ export class WeekViewComponent implements OnInit {
 			],
 			[],//zat
 			[]//zon
-		];*/
+  ];
   //dummie data
 
   constructor(private router: Router, private roomService: RoomService) {
@@ -62,36 +62,43 @@ export class WeekViewComponent implements OnInit {
     console.log(this.reservations);
     console.log(this.roomId);
     if (isNullOrUndefined(this.firstdayOfWeek)) this.firstdayOfWeek = new Date();
-    if (isNullOrUndefined(this.roomId)) this.roomId = "5a195e910c25f635c85ddbd1";
-    //this.testService();
-    console.log(this.roomId);
     for (let i = 0; i < 7; ++i) {
       this.daysOfWeek.push(new Date(this.firstdayOfWeek));
       this.daysOfWeek[i].setDate(this.daysOfWeek[i].getDate() + i);
     }
-    //one day back bc backend function parameter is exclusive
-    //alse date is day of month bc javascript
-    let firstDayMinusOne = new Date(this.firstdayOfWeek.getTime());
-    firstDayMinusOne.setDate(firstDayMinusOne.getDate() - 1);
-    let weekLater = new Date(this.firstdayOfWeek.getTime());
-    weekLater.setDate(weekLater.getDate() + 9);
+    if (isNullOrUndefined(this.roomId)) {
+      this.room = new Room("dummie", "", "", "", "");
+      this.reservations = this.dummieFallBack;
 
-    this.roomService.getRoomWithRervationsBetween(this.roomId, firstDayMinusOne, weekLater).subscribe(
-      () => {
-        this.room = this.roomService.room;
-        for (let res of this.room.reservations) {
-          let dateOfRes = new Date(res.starttime.getFullYear(), res.starttime.getMonth(), res.starttime.getDate());
-          this.reservations[this.daysOfWeek.findIndex(d => d == dateOfRes)].push({
-            starttime: res.starttime,
-            endtime: res.endtime
-          });
-        }
-        console.log(this.room.reservations);
-        console.log(this.room.name);
-        this.loaded = true;
-      },
-      err => console.error(err)
-    );
+      this.loaded = true;
+    } else {
+      //this.testService();
+      console.log(this.roomId);
+      //one day back bc backend function parameter is exclusive
+      //alse date is day of month bc javascript
+      let firstDayMinusOne = new Date(this.firstdayOfWeek.getTime());
+      firstDayMinusOne.setDate(firstDayMinusOne.getDate() - 1);
+      let weekLater = new Date(this.firstdayOfWeek.getTime());
+      weekLater.setDate(weekLater.getDate() + 9);
+
+      this.roomService.getRoomWithRervationsBetween(this.roomId, firstDayMinusOne, weekLater).subscribe(
+        () => {
+          this.room = this.roomService.room;
+          for (let res of this.room.reservations) {
+            let dateOfRes = new Date(res.starttime.getFullYear(), res.starttime.getMonth(), res.starttime.getDate());
+            this.reservations[this.daysOfWeek.findIndex(d => d == dateOfRes)].push({
+              starttime: res.starttime,
+              endtime: res.endtime
+            });
+          }
+          console.log(this.room.reservations);
+          console.log(this.room.name);
+          this.loaded = true;
+        },
+        err => console.error(err)
+      );
+    }
+
   }
 
   formatDate(d: Date) {
