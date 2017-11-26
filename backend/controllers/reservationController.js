@@ -55,7 +55,7 @@ exports.getAllReservations = function (req, res) {
     promise.then(function (reservations) {
         res.json(reservations);
     }, function (err) {
-        res.status(500).json({success: false, msg: 'Failed to get reservations', error:err});
+        res.status(500).json({success: false, msg: 'Failed to get reservations', error: err});
     });
 };
 
@@ -64,7 +64,7 @@ exports.getReservationById = function (req, res) {
     promise.then(function (reservation) {
         res.json(reservation);
     }, function (err) {
-        res.status(500).json({success: false, msg: 'Failed to get reservation', error:err});
+        res.status(500).json({success: false, msg: 'Failed to get reservation', error: err});
     });
 };
 
@@ -78,15 +78,15 @@ exports.addReservation = function (req, res) {
             return ReservationRepository.addReservation(req);
         }
     }, function (err) {
-        res.status(500).json({success: false, msg: 'Failed to check availability', error:err});
+        res.status(500).json({success: false, msg: 'Failed to check availability', error: err});
     }).then(function (reservation) {
         return RoomRepository.addReservationToRoom(reservation);
     }, function (err) {
-        res.status(500).json({success: false, msg: 'Failed to create reservation', error:err});
+        res.status(500).json({success: false, msg: 'Failed to create reservation', error: err});
     }).then(function () {
         res.json({success: true, msg: 'Reservation created'});
     }, function (err) {
-        res.status(500).json({success: false, msg: 'Failed to add reservation to room', error:err});
+        res.status(500).json({success: false, msg: 'Failed to add reservation to room', error: err});
     });
 
 
@@ -102,13 +102,12 @@ exports.updateReservation = function (req, res) {
             return ReservationRepository.updateReservation(req);
         }
     }, function (err) {
-        res.status(500).json({success: false, msg: 'Failed to check availability', error:err});
+        res.status(500).json({success: false, msg: 'Failed to check availability', error: err});
     }).then(function () {
         res.json({success: true, msg: 'Reservation updated'});
     }, function (err) {
-        res.status(500).json({success: false, msg: 'Failed to update reservation', error:err});
+        res.status(500).json({success: false, msg: 'Failed to update reservation', error: err});
     });
-
 
 
 };
@@ -119,20 +118,17 @@ exports.deleteReservation = function (req, res) {
         transporter.sendMail(mailOptionsFail);
         res.json({success: true, msg: 'Reservation removed'});
 
-    promise.then(function (reservation) {
-        return RoomRepository.removeReservationFromRoom(reservation);
+        promise.then(function (reservation) {
+            return RoomRepository.removeReservationFromRoom(reservation);
 
-    }, function (err) {
-        res.status(500).json({success: false, msg: 'Failed to remove reservation', error:err});
-    }).then(function () {
-        res.json({success: true, msg: 'Reservation removed'});
-    }, function (err) {
-        res.status(500).json({success: false, msg: 'Failed to remove reservation from room', error:err});
+        }, function (err) {
+            res.status(500).json({success: false, msg: 'Failed to remove reservation', error: err});
+        }).then(function () {
+            res.json({success: true, msg: 'Reservation removed'});
+        }, function (err) {
+            res.status(500).json({success: false, msg: 'Failed to remove reservation from room', error: err});
+        });
     });
-
-
-
-});
 };
 
 // Extra functions
@@ -142,7 +138,7 @@ exports.confirmReservation = function (req, res) {
         transporter.sendMail(mailOptionsSuccess);
         res.json({success: true, msg: 'Reservation status updated'});
     }, function (err) {
-        res.status(500).json({success: false, msg: 'Failed to change reservation status', error:err});
+        res.status(500).json({success: false, msg: 'Failed to change reservation status', error: err});
     });
 };
 
@@ -151,7 +147,7 @@ exports.getUnconfirmedReservations = function (req, res) {
     promise.then(function (reservations) {
         res.json(reservations);
     }, function (err) {
-        res.status(500).json({success: false, msg: 'Failed to get reservations', error:err});
+        res.status(500).json({success: false, msg: 'Failed to get reservations', error: err});
     });
 };
 
@@ -160,7 +156,7 @@ exports.getConfirmedReservations = function (req, res) {
     promise.then(function (reservations) {
         res.json(reservations);
     }, function (err) {
-        res.status(500).json({success: false, msg: 'Failed to get reservations', error:err});
+        res.status(500).json({success: false, msg: 'Failed to get reservations', error: err});
     });
 };
 
