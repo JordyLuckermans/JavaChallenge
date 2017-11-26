@@ -1,6 +1,51 @@
 'use strict';
 
 var ReservationRepository = require('../repositories/reservationRepository');
+var nodemailer = require('nodemailer');
+
+
+var transporter = nodemailer.createTransport({
+    service: 'gmail',//Dit is de mail-server die gebruikt wordt door de verzender van de mail
+    auth: {
+        user: 'lguacademygroep7@gmail.com',//Hier moet het e-mailadres van de organisatie ingevuld worden tussen de aanhalingstekens
+        pass: 'LGUGroep7'//Hier moet het wachtwoord van het e-mailadres worden ingevuld tussen de aanhalingstekens
+    }
+});
+var reservationMail = nodemailer.createTransport({
+    service: 'gmail', //Dit is de mail-server die gebruikt wordt door de verzender van de mail
+    auth: {
+        user: 'lgugebruikergroep7@gmail.com',//Hier moet het e-mailadres van de gebruiker ingevuld worden tussen de aanhalingstekens
+        pass: 'LGUGroep7'//Hier moet het wachtwoord van het e-mailadres worden ingevuld tussen de aanhalingstekens
+    }
+});
+var mailOptionsFail = {
+    from: 'lguacademygroep7@gmail.com',
+    to: 'lgugebruikergroep7@gmail.com',
+    subject: 'Jouw reservatie',
+    text: 'Jouw reservatie voor een zaal bij LGU werd geweigerd :( better luck next time!'
+};
+
+var mailOptionsSuccess = {
+    from: 'lguacademygroep7@gmail.com',
+    to: 'lgugebruikergroep7@gmail.com',
+    subject: 'Jouw reservatie',
+    text: 'Jouw reservatie voor een zaal bij LGU werd geaccepteerd!'
+};
+
+var mailOptionsUpdated = {
+    from: 'lguacademygroep7@gmail.com',
+    to: 'lgugebruikergroep7@gmail.com',
+    subject: 'Jouw reservatie',
+    text: 'Jouw reservatie voor een zaal bij LGU werd aangepast!'
+};
+
+var mailOptionsToAdmin = {
+    from: 'lgugebruikergroep7@gmail.com',
+    to: 'lguacademygroep7@gmail.com',
+    subject: 'Nieuwe reservatie',
+    text: 'Er is een nieuwe reservatie gemaakt!'
+};
+
 
 exports.getAllReservations = function (req, res) {
     var promise = ReservationRepository.getAllReservations();
@@ -26,6 +71,7 @@ exports.addReservation = function (req, res) {
         if (Object.size(reservations) !== 0) {
             res.status(403).json({success: false, msg: 'Room not available for reservation'})
         } else {
+            reservationMail.sendMail(mailOptionsToAdmin);
             return ReservationRepository.addReservation(req);
         }
     }, function (err) {
@@ -35,6 +81,8 @@ exports.addReservation = function (req, res) {
     }, function (err) {
         res.status(500).json({success: false, msg: 'Failed to create reservation', error:err});
     });
+
+
 };
 
 exports.updateReservation = function (req, res) {
@@ -43,6 +91,7 @@ exports.updateReservation = function (req, res) {
         if (Object.size(reservations) !== 0) {
             res.status(403).json({success: false, msg: 'Room not available for reservation'})
         } else {
+            transporter.sendMail(mailOptionsUpdated);
             return ReservationRepository.updateReservation(req);
         }
     }, function (err) {
@@ -52,21 +101,29 @@ exports.updateReservation = function (req, res) {
     }, function (err) {
         res.status(500).json({success: false, msg: 'Failed to update reservation', error:err});
     });
+
+
+
 };
 
 exports.deleteReservation = function (req, res) {
     var promise = ReservationRepository.deleteReservation(req);
     promise.then(function () {
+        transporter.sendMail(mailOptionsFail);
         res.json({success: true, msg: 'Reservation removed'});
     }, function (err) {
         res.status(500).json({success: false, msg: 'Failed to remove reservation', error:err});
     });
+
+
+
 };
 
 // Extra functions
 exports.confirmReservation = function (req, res) {
     var promise = ReservationRepository.changeReservationStatus(req, true);
     promise.then(function () {
+        transporter.sendMail(mailOptionsSuccess);
         res.json({success: true, msg: 'Reservation status updated'});
     }, function (err) {
         res.status(500).json({success: false, msg: 'Failed to change reservation status', error:err});
@@ -90,6 +147,7 @@ exports.getConfirmedReservations = function (req, res) {
         res.status(500).json({success: false, msg: 'Failed to get reservations', error:err});
     });
 };
+
 
 Object.size = function (obj) {
     var size = 0, key;
