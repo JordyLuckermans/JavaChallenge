@@ -24,3 +24,25 @@ exports.updateRoom = function (req) {
 exports.deleteRoom = function (req) {
     return Room.remove({_id: req.params.id});
 };
+
+exports.getAllRoomsWithReservationsByTimespan = function (req) {
+    return Room.find().populate({
+        path: 'reservations',
+        match: {$and: [{endtime: {$gte: req.params.from}}, {starttime: {$lte: req.params.to}}]}
+    });
+};
+
+exports.getRoomByIdWithReservationsByTimespan = function (req) {
+    return Room.findById({_id: req.params.id}).populate({
+        path: 'reservations',
+        match: {$and: [{endtime: {$gte: req.params.from}}, {starttime: {$lte: req.params.to}}]}
+    });
+};
+
+exports.addReservationToRoom = function (reservation) {
+    return Room.findOneAndUpdate({_id: reservation.room}, {$push: {reservations: reservation}});
+};
+
+exports.removeReservationFromRoom = function (reservation) {
+    return Room.findOneAndUpdate({_id: reservation.room}, {$pull: {reservations: reservation}});
+};

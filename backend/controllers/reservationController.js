@@ -1,6 +1,7 @@
 'use strict';
 
 var ReservationRepository = require('../repositories/reservationRepository');
+var RoomRepository = require('../repositories/roomRepository');
 
 exports.getAllReservations = function (req, res) {
     var promise = ReservationRepository.getAllReservations();
@@ -30,10 +31,14 @@ exports.addReservation = function (req, res) {
         }
     }, function (err) {
         res.status(500).json({success: false, msg: 'Failed to check availability', error:err});
+    }).then(function (reservation) {
+        return RoomRepository.addReservationToRoom(reservation);
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to create reservation', error:err});
     }).then(function () {
         res.json({success: true, msg: 'Reservation created'});
     }, function (err) {
-        res.status(500).json({success: false, msg: 'Failed to create reservation', error:err});
+        res.status(500).json({success: false, msg: 'Failed to add reservation to room', error:err});
     });
 };
 
@@ -56,10 +61,14 @@ exports.updateReservation = function (req, res) {
 
 exports.deleteReservation = function (req, res) {
     var promise = ReservationRepository.deleteReservation(req);
-    promise.then(function () {
-        res.json({success: true, msg: 'Reservation removed'});
+    promise.then(function (reservation) {
+        return RoomRepository.removeReservationFromRoom(reservation);
     }, function (err) {
         res.status(500).json({success: false, msg: 'Failed to remove reservation', error:err});
+    }).then(function () {
+        res.json({success: true, msg: 'Reservation removed'});
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to remove reservation from room', error:err});
     });
 };
 
