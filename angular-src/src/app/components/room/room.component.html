@@ -6,8 +6,8 @@
         <p class="card-text pl-1">{{room.description}}</p>
         <div class="pl-1">
           <!--Volgende knoppen moeten met ngIf want is enkel voor admin-->
-          <a [routerLink]="['/timeline']" class="btn btn-royal">Bewerken</a>
-          <a [routerLink]="['/timeline']" class="btn btn-danger">Verwijderen</a>
+          <a *ngIf="authService.loggedIn()" [routerLink]="['/timeline']" class="btn btn-royal">Bewerken</a>
+          <a *ngIf="!authService.loggedIn()" [routerLink]="['/timeline']" class="btn btn-danger">Verwijderen</a>
           <!---->
           <a [routerLink]="['/timeline',{roomId:room._id}]" class="btn btn-royal">Beschikbaarheid</a>
         </div>
