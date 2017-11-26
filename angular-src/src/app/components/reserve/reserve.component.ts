@@ -41,18 +41,18 @@ export class ReserveComponent implements OnInit {
       (rooms: Room[]) => {
         this.rooms = rooms;
       }
-      //res=>console.log(this.roomService.rooms),
-      //err=>console.error(err),
     );
 
-
-    this.authService.getProfile().subscribe(res => {
-        this.user = res.user;
+    this.authService.getProfile().subscribe(profile=> {
+        this.user = profile.user.data;
+        console.dir(profile.user);
+        console.dir(this.user);
       },
-      err => {
+      err=>{
         console.log(err);
         return false;
       });
+
   }
 
   onReserveSubmit() {
@@ -90,15 +90,17 @@ export class ReserveComponent implements OnInit {
     }
 
 
+    console.log(this.room);
     const reservation = {
-
-      room: this.room['id'],
+      room: this.room['_id'],
       user: this.user['_id'],
       starttime: parsedStartDate,
       endtime: parsedEndDate,
       motivation: this.motivation,
       comment: this.comment
-    }
+    };
+
+    console.info("reservation:", reservation);
 
     if (!this.validateService.validateReservation(reservation)) {
       this.flashMessage.show('Vul aub alle velden in.', {cssClass: 'alert-danger', timeout: 3000});
