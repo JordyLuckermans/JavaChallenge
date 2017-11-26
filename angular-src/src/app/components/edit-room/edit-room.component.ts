@@ -13,13 +13,11 @@ export class EditRoomComponent implements OnInit {
 
   constructor(private roomService:RoomService) {
     this.roomService.getRooms().subscribe(rooms=> {
-      console.log(rooms);
+      this.rooms = rooms;
     })
   }
-
   ngOnInit() {
   }
-
 
 }
 interface Room{

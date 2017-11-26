@@ -41,6 +41,11 @@ export class ValidateService {
     return true;
   }
 
+  validateDateFormat(date){
+    const re = /\d{1,2}\/\d{1,2}\/\d{4}/;
+    return re.test(date);
+  }
+
   validateTime(time){
     const re = /\b([01]?[0-9]|2[0-3]):[0-5][0-9]\b/;
     return re.test(time);

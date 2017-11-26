@@ -23,6 +23,7 @@ import { ReservationService} from "./services/reservation.service";
 import { EditRoomComponent } from './components/edit-room/edit-room.component';
 import { DummieDataComponent } from './components/dummie-data/dummie-data.component';
 import { RoomService} from "./services/room.service";
+import { RoomComponent } from './components/room/room.component';
 
 const appRoutes:Routes=[
   {path:'',component:HomeComponent},
@@ -52,6 +53,7 @@ const appRoutes:Routes=[
     ReserveComponent,
     EditRoomComponent,
     DummieDataComponent,
+    RoomComponent,
   ],
   imports: [
     BrowserModule,
