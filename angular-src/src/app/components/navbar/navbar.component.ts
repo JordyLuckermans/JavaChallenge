@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit {
         this.router.navigate(['/home']);
         this.flashMessage.show('Je bent uitgelogd!', {cssClass: 'alert-success', timeout: 3000});
 
-        //return false;
+        window.location.reload();
+        return false;
     }
 }
