@@ -11,6 +11,10 @@ export class DummieDataComponent implements OnInit {
   constructor(private roomService: RoomService) { }
 
   ngOnInit() {
+    this.roomService.getRooms().subscribe(
+      res=>console.log(this.roomService.rooms),
+      err=>console.error(err)
+    );
   }
 
   generateRooms() {
