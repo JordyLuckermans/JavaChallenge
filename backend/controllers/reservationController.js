@@ -26,15 +26,14 @@ exports.addReservation = function (req, res) {
         if (Object.size(reservations) !== 0) {
             res.status(403).json({success: false, msg: 'Room not available for reservation'})
         } else {
-            var promise2 = ReservationRepository.addReservation(req);
-            promise2.then(function () {
-                res.json({success: true, msg: 'Reservation created'});
-            }, function (err) {
-                res.status(500).json({success: false, msg: 'Failed to create reservation', error:err});
-            });
+            return ReservationRepository.addReservation(req);
         }
     }, function (err) {
         res.status(500).json({success: false, msg: 'Failed to check availability', error:err});
+    }).then(function () {
+        res.json({success: true, msg: 'Reservation created'});
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to create reservation', error:err});
     });
 };
 
@@ -44,15 +43,14 @@ exports.updateReservation = function (req, res) {
         if (Object.size(reservations) !== 0) {
             res.status(403).json({success: false, msg: 'Room not available for reservation'})
         } else {
-            var promise2 = ReservationRepository.updateReservation(req);
-            promise2.then(function () {
-                res.json({success: true, msg: 'Reservation updated'});
-            }, function (err) {
-                res.status(500).json({success: false, msg: 'Failed to update reservation', error:err});
-            });
+            return ReservationRepository.updateReservation(req);
         }
     }, function (err) {
         res.status(500).json({success: false, msg: 'Failed to check availability', error:err});
+    }).then(function () {
+        res.json({success: true, msg: 'Reservation updated'});
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to update reservation', error:err});
     });
 };
 
