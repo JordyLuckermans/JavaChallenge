@@ -4,21 +4,25 @@
     beschikbaarheden nakijken en reserveren.</p>
 <br/>
 <div class="row">
-    <div class="col-xs-12 col-md-6 col-lg-4 mb-2">
-        <div class="card">
-            <img class="card-img-top" src="../../../assets/zaal.PNG" alt="Card image cap">
-            <div class="card-block">
-                <h4 class="card-title pl-1">Danszaal</h4>
-                <p class="card-text pl-1">Deze danszaal bevat een grote spiegel en parket. Er is airco aanwezig voor het
-                    hoofd koel te houden tijdens de warme zomerdagen.</p>
-                <div class="pl-1">
-                    <!--Volgende knoppen moeten met ngIf want is enkel voor admin-->
-                    <a [routerLink]="['/timeline']" class="btn btn-royal">Bewerken</a>
-                    <a [routerLink]="['/timeline']" class="btn btn-danger">Verwijderen</a>
-                    <!---->
-                    <a [routerLink]="['/timeline']" class="btn btn-royal">Beschikbaarheid</a>
+
+    <app-room [room]="room" *ngFor="let room of rooms"></app-room>
+
+        <div class="col-xs-12 col-md-6 col-lg-4 mb-2">
+            <div class="card">
+                <img class="card-img-top" src="../../../assets/zaal.PNG" alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title pl-1">Zaaltje</h4>
+                    <p class="card-text pl-1">Deze danszaal bevat een grote spiegel en parket. Er is airco aanwezig voor
+                        het
+                        hoofd koel te houden tijdens de warme zomerdagen.</p>
+                    <div class="pl-1">
+                        <!--Volgende knoppen moeten met ngIf want is enkel voor admin-->
+                        <a [routerLink]="['/timeline']" class="btn btn-royal">Bewerken</a>
+                        <a [routerLink]="['/timeline']" class="btn btn-danger">Verwijderen</a>
+                        <!---->
+                        <a [routerLink]="['/timeline']" class="btn btn-royal">Beschikbaarheid</a>
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
 
