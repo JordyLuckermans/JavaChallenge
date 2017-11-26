@@ -81,9 +81,6 @@ export class ReserveComponent implements OnInit {
       return false;
     }
 
-    /*var roomObjectId = mongoose.Types.ObjectId(this.room['id']);
-    var userObjectId = mongoose.Types.ObjectId(this.room['_id']);*/
-
     const reservation = {
 
       room: this.room['id'],
@@ -105,7 +102,7 @@ export class ReserveComponent implements OnInit {
       return false;
     }
 
-    this.reservationService.confirmReservation(reservation).subscribe(data => {
+    this.reservationService.askReservation(reservation).subscribe(data => {
       if (data.success) {
         alert("success");
       } else {
