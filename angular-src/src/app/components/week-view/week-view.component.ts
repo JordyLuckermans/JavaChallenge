@@ -60,10 +60,11 @@ export class WeekViewComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.reservations);
+    console.log(this.roomId);
     if (isNullOrUndefined(this.firstdayOfWeek)) this.firstdayOfWeek = new Date();
     if (isNullOrUndefined(this.roomId)) this.roomId = "5a195e910c25f635c85ddbd1";
     //this.testService();
-    console.log(this.firstdayOfWeek);
+    console.log(this.roomId);
     for (let i = 0; i < 7; ++i) {
       this.daysOfWeek.push(new Date(this.firstdayOfWeek));
       this.daysOfWeek[i].setDate(this.daysOfWeek[i].getDate() + i);
