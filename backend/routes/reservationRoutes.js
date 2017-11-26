@@ -15,13 +15,13 @@ module.exports = function(app) {
         .get(AuthHelper.adminRequired, ReservationController.getUnconfirmedReservations);
 
     app.route('/reservations/:id')
-        .get(ReservationController.getReservationById)
-        .delete(ReservationController.deleteReservation)
-        .put(ReservationController.updateReservation);
+        .get(AuthHelper.loginRequired,ReservationController.getReservationById)//check
+        .delete(AuthHelper.adminRequired,ReservationController.deleteReservation)//check
+        .put(AuthHelper.adminRequired,ReservationController.updateReservation);//check
 
     app.route('/reservations/:id/confirm')
-        .patch(ReservationController.confirmReservation);
+        .patch(AuthHelper.adminRequired,ReservationController.confirmReservation);//check
 
     app.route('/reservations/:id/deny')
-        .patch(ReservationController.deleteReservation);
+        .patch(AuthHelper.adminRequired,ReservationController.deleteReservation);//check
 };
