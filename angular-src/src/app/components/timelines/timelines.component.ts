@@ -9,7 +9,7 @@ import {isNullOrUndefined} from "util";
 })
 export class TimelinesComponent implements OnInit {
 
-  //dummie
+  roomId;
   firstDay: Date;
 
   constructor(private route: ActivatedRoute) {
@@ -21,6 +21,7 @@ export class TimelinesComponent implements OnInit {
         this.firstDay = new Date(+parts[0],+parts[1] - 1,+parts[2]);
         console.log("test" + this.firstDay.getDate() + '/' + this.firstDay.getMonth()) ;
       }
+      if (!isNullOrUndefined(params['roomId'])) this.roomId = params['roomId'];
     });
   }
 
