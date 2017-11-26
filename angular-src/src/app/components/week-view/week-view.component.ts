@@ -13,7 +13,6 @@ import {Observable} from "rxjs/Observable";
 export class WeekViewComponent implements OnInit {
   @Input() roomId: String;
   @Input() firstdayOfWeek: Date;
-  date: String;
 
   dateIn;
   loaded = false;
@@ -62,18 +61,12 @@ export class WeekViewComponent implements OnInit {
   ngOnInit() {
     console.log(this.reservations);
     if (isNullOrUndefined(this.firstdayOfWeek)) this.firstdayOfWeek = new Date();
-    if (!isNullOrUndefined(this.date)) {
-      console.log("date exists");
-      let parts = this.date.split("-");
-      this.firstdayOfWeek = new Date(+parts[0], +parts[1], +parts[2]);
-    }
     if (isNullOrUndefined(this.roomId)) this.roomId = "5a195e910c25f635c85ddbd1";
     //this.testService();
     console.log(this.firstdayOfWeek);
     for (let i = 0; i < 7; ++i) {
       this.daysOfWeek.push(new Date(this.firstdayOfWeek));
       this.daysOfWeek[i].setDate(this.daysOfWeek[i].getDate() + i);
-      //console.log(this.daysOfWeek + " " + i);
     }
     //one day back bc backend function parameter is exclusive
     //alse date is day of month bc javascript
@@ -110,6 +103,20 @@ export class WeekViewComponent implements OnInit {
       () => {
         this.router.navigate(['/timeline', {date: this.dateIn}]);
       });
+  }
+
+  prevWeek(){
+    let prev = new Date(this.firstdayOfWeek.getTime());
+    prev.setDate(prev.getDate() - 7);
+    this.dateIn = this.dateToString(prev);
+    this.testDate()
+  }
+
+  nextWeek(){
+    let prev = new Date(this.firstdayOfWeek.getTime());
+    prev.setDate(prev.getDate() + 7);
+    this.dateIn = this.dateToString(prev);
+    this.testDate()
   }
 
   testService() {
