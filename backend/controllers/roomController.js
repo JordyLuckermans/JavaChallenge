@@ -1,6 +1,7 @@
 'use strict';
 
 var RoomRepository = require('../repositories/roomRepository');
+var ReservationRepository = require('../repositories/reservationRepository');
 
 exports.getAllRooms = function (req, res) {
     var promise = RoomRepository.getAllRooms();
@@ -44,5 +45,25 @@ exports.deleteRoom = function (req, res) {
         res.json({success: true, msg: 'Room removed'});
     }, function (err) {
         res.status(500).json({success: false, msg: 'Failed to remove room', error: err});
+    });
+};
+
+// extra functions
+
+exports.getAllRoomsWithReservationsByTimespan = function (req, res) {
+    var promise = RoomRepository.getAllRoomsWithReservationsByTimespan(req);
+    promise.then(function (rooms) {
+        res.json(rooms);
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to get rooms', error: err});
+    });
+};
+
+exports.getRoomWithReservationsByTimespan = function (req, res) {
+    var promise = RoomRepository.getRoomByIdWithReservationsByTimespan(req);
+    promise.then(function (room) {
+        res.json(room);
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to get room', error: err});
     });
 };

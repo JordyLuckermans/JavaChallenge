@@ -17,7 +17,11 @@ const roomSchema = new mongoose.Schema({
     description: {
         type: String,
         required: true
-    }
+    },
+    reservations: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Reservation'
+    }]
 });
 
 const Room = module.exports = mongoose.model('Room', roomSchema);

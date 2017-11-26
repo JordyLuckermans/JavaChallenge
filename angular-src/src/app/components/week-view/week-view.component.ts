@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {RoomService} from "../../services/room.service";
 
 @Component({
   selector: 'app-week-view',
@@ -39,7 +40,7 @@ export class WeekViewComponent implements OnInit {
   ];
   //dummie data
 
-  constructor(private router:Router) {
+  constructor(private router: Router, private roomService: RoomService) {
 
   }
 
@@ -51,6 +52,7 @@ export class WeekViewComponent implements OnInit {
       tempDates[i].setDate(tempDates[i].getDate() + i);
     }
     this.daysOfWeek = tempDates;
+    this.testService();
   }
 
   formatDate(d: Date) {
@@ -64,5 +66,19 @@ export class WeekViewComponent implements OnInit {
       () => {
         this.router.navigate(['/timeline', {date: this.dateIn}]);
       });
+  }
+
+  testService() {
+    this.roomService.getAllRoomsWithRervationsBetween(new Date(2017, 10, 1), new Date(2017, 10, 30)).subscribe(
+      () => {console.log("all");console.log(this.roomService.rooms)},
+      err => console.error(err)
+    );
+    this.roomService.getRoomWithRervationsBetween(
+      "5a195e910c25f635c85ddbd1",
+      new Date(2017, 10, 1), new Date(2017, 10, 30)
+    ).subscribe(
+      () => {console.log("one");console.log(this.roomService.room)},
+      err => console.error(err)
+    );
   }
 }

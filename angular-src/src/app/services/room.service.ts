@@ -17,18 +17,11 @@ export class RoomService {
   getRooms() {
     const headers = new Headers({'Content-Type': 'application/json'});
     return this.http.get(this.url + "/rooms", {headers})
-      .map((res: Response) => {
-        const result = res.json();
-        let parsedRooms: Room[] = [];
-        for (let room of result) {
-          parsedRooms.push(this.objToRoom(room));
-        }
-        this.rooms = parsedRooms;
-      })
-      .catch((err: Response) => {
-        console.error(err);
-        return Observable.throw(err);
-      });
+        .map((res: Response) => res.json())
+        .catch((err: Response) => {
+          console.error(err);
+          return Observable.throw(err);
+        });
   }
 
   getRoomById(id) {
@@ -87,6 +80,38 @@ export class RoomService {
       });
   }
 
+  getAllRoomsWithRervationsBetween(start: Date, end: Date) {
+    const headers = new Headers({'Content-Type': 'application/json'});
+    const urlp2 = '/rooms/reservations/' + JSON.stringify(start) + '/' + JSON.stringify(end);
+    return this.http.get(this.url + urlp2, {headers})
+      .map((res: Response) => {
+        const result = res.json();
+        let parsedRooms: Room[] = [];
+        for (let room of result) {
+          parsedRooms.push(this.objToRoomWithReservations(room));
+        }
+        this.rooms = parsedRooms;
+      })
+      .catch((err: Response) => {
+        console.error(err);
+        return Observable.throw(err);
+      });
+  }
+
+  getRoomWithRervationsBetween(id: String, start: Date, end: Date) {
+    const headers = new Headers({'Content-Type': 'application/json'});
+    const urlp2 = '/rooms/' + id + '/reservations/' + JSON.stringify(start) + '/' + JSON.stringify(end);
+    return this.http.get(this.url + urlp2, {headers})
+      .map((res: Response) => {
+        const result = res.json();
+        this.room = this.objToRoomWithReservations(result);
+      })
+      .catch((err: Response) => {
+        console.error(err);
+        return Observable.throw(err);
+      });
+  }
+
   objToRoom(obj): Room {
     return new Room(
       obj.name,
@@ -94,6 +119,17 @@ export class RoomService {
       obj.location,
       obj.description,
       obj._id
+    );
+  }
+
+  objToRoomWithReservations(obj): Room {
+    return new Room(
+      obj.name,
+      obj.dimensions,
+      obj.location,
+      obj.description,
+      obj._id,
+      obj.reservations
     );
   }
 }

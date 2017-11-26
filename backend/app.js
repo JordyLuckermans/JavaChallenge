@@ -34,6 +34,7 @@ app.use(function (req, res, next) {
         jsonwebtoken.verify(req.headers.authorization.split(' ')[1], config.secret, function (err, decode) {
             if (err) req.user = undefined;
             req.user = decode;
+            console.log(decode);
             next();
         });
     } else {
