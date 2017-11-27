@@ -35,7 +35,10 @@ export class ValidateService {
   }
 
   validateDate(date){
-    if(isNaN(Date.parse(date.toString()))){
+    var dateArray = date.split("/");
+    var dateString = dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
+
+    if(isNaN(Date.parse(dateString))){
       return false;
     }
     return true;

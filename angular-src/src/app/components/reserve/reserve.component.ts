@@ -6,6 +6,7 @@ import {ValidateService} from "app/services/validate.service";
 import {RoomService} from "../../services/room.service";
 import {ReservationService} from "../../services/reservation.service";
 import {Room} from "../../models/room.model";
+import {find} from "rxjs/operator/find";
 
 @Component({
   selector: 'app-reserve',
@@ -57,10 +58,25 @@ export class ReserveComponent implements OnInit {
 
   onReserveSubmit() {
     let startDateString = this.date + " " + this.starttime;
-    let endDateString = this.date + " " + this.endtime;
+    let endDateString = this.date + " "  + this.endtime;
+
+    let startDateArray = startDateString.split("/");
+    let endDateArray = endDateString.split("/");
+
+    startDateString = startDateArray[1] + "/" + startDateArray[0] + "/" + startDateArray[2];
+    endDateString = endDateArray[1] + "/" + endDateArray[0] + "/" + endDateArray[2];
+
+
+    console.info("start", startDateString);
+    console.info("end", endDateString);
+
 
     let parsedStartDate = Date.parse(startDateString);
     let parsedEndDate = Date.parse(endDateString);
+
+
+    console.info("start", parsedStartDate);
+    console.info("end", parsedEndDate);
 
     if(!this.validateService.validateDateFormat(this.date)) {
       this.flashMessage.show("Gebruik aub een datum met formaat dd/mm/jjjj", {cssClass: 'alert-danger', timeout: 3000});
@@ -68,16 +84,19 @@ export class ReserveComponent implements OnInit {
     }
 
     //validation datestring
-    if (!this.validateService.validateDate(startDateString) && !this.validateService.validateDate(endDateString)) {
+    if (!this.validateService.validateDate(this.date)) {
       this.flashMessage.show("vul aub een geldige datum en tijdstip in", {cssClass: 'alert-danger', timeout: 3000});
       return false;
     }
+
+    console.info("date", this.date);
 
     //validation time
     if (!this.validateService.validateTime(this.starttime) && !this.validateService.validateTime(this.endtime)) {
       this.flashMessage.show("vul aub een geldig tijdstip in", {cssClass: 'alert-danger', timeout: 3000});
       return false;
     }
+
 
     if (Date.now() > parsedStartDate || Date.now() > parsedEndDate) {
       this.flashMessage.show("vul aub een datum in de toekoemst in", {cssClass: 'alert-danger', timeout: 3000});
@@ -88,6 +107,7 @@ export class ReserveComponent implements OnInit {
       this.flashMessage.show("vul aub een einduur na uw beginuur in", {cssClass: 'alert-danger', timeout: 3000});
       return false;
     }
+
 
 
     console.log(this.room);
