@@ -62,19 +62,25 @@ export class DummieDataComponent implements OnInit {
                 name: "Grote danszaal 1",
                 dimensions: "groot",
                 location: "urban center",
-                description: "Vormt feestzaal samen met grote  danszalen 2 en 3. Deze zaal heeft parket en een grote spiegel. Je kan deze zaal apart reserveren of met samen met de andere danszalen."
+                description: "Vormt feestzaal samen met grote  danszalen 2 en 3. Deze zaal heeft parket en een grote spiegel. Je kan deze zaal apart reserveren of met samen met de andere danszalen (de feestzaal)."
             },
             {
                 name: "Grote danszaal 2",
                 dimensions: "groot",
                 location: "urban center",
-                description: "Vormt feestzaal samen met grote  danszalen 1 en 3.  Deze zaal heeft parket en een grote spiegel. Je kan deze zaal apart reserveren of met samen met de andere danszalen."
+                description: "Vormt feestzaal samen met grote  danszalen 1 en 3.  Deze zaal heeft parket en een grote spiegel. Je kan deze zaal apart reserveren of met samen met de andere danszalen (de feestzaal)."
             },
             {
                 name: "Grote danszaal 3",
                 dimensions: "groot",
                 location: "urban center",
-                description: "Vormt feestzaal samen met grote  danszalen 1 en 2.  Deze zaal heeft parket en een grote spiegel. Je kan deze zaal apart reserveren of met samen met de andere danszalen."
+                description: "Vormt feestzaal samen met grote  danszalen 1 en 2.  Deze zaal heeft parket en een grote spiegel. Je kan deze zaal apart reserveren of met samen met de andere danszalen (de feestzaal)."
+            },
+            {
+                name: "Feestzaal",
+                dimensions: "Drie keer zo groot als een danszaal",
+                location: "urban center",
+                description: "Dit zijn de drie grote danszalen bij elkaar, ideaal voor een groot evenement te organiseren."
             },
             {
                 name: "Kleine danszaal 1",
