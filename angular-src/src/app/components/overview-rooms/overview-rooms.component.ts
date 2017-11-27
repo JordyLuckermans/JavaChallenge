@@ -9,11 +9,12 @@ import {FlashMessagesService} from 'angular2-flash-messages';
     /*templateUrl: 'overview-rooms.component.html',*/
     template: `
     <h2>Overzicht zalen</h2>
-
     <p>De volgende zalen stellen wij ter beschikking. Als er een zaal is dat je interesseert kan je meteen de
     beschikbaarheden nakijken en reserveren.</p>
     <br/>
-    <div *ngIf="authService.loggedIn()"><button class="btn btn-royal" [routerLink]="['/editRoom']">Zaal toevoegen</button></div>
+    <div *ngIf="authService.loggedIn()" class="m-1">
+        <button class="btn btn-royal" [routerLink]="['/editRoom']">Zaal toevoegen</button>
+    </div>
     <br/>
     <div class="container-fluid">
         <div class="row">
