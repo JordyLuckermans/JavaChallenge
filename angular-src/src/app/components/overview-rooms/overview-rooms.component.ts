@@ -1,6 +1,8 @@
 import {Component, OnInit, Input, ViewEncapsulation} from '@angular/core';
 import {RoomService} from '../../services/room.service';
 import {Room} from "../../models/room.model";
+import {AuthService} from '../../services/auth.service';
+import {FlashMessagesService} from 'angular2-flash-messages';
 
 @Component({
     selector: 'app-overview-rooms',
@@ -11,11 +13,14 @@ import {Room} from "../../models/room.model";
     <p>De volgende zalen stellen wij ter beschikking. Als er een zaal is dat je interesseert kan je meteen de
     beschikbaarheden nakijken en reserveren.</p>
     <br/>
+    <button class="btn btn-royal" [routerLink]="['/editRoom']">Zaal toevoegen</button>
+    <br/>
     <div class="container-fluid">
         <div class="row">
             <app-room [room]=room *ngFor="let room of rooms"></app-room>
         </div>
      </div>
+     <div></div>
         
 `,
     encapsulation: ViewEncapsulation.None
@@ -23,8 +28,9 @@ import {Room} from "../../models/room.model";
 export class OverviewRoomsComponent implements OnInit {
     rooms: Room[];
 
-    constructor(private roomService: RoomService) {
-        console.log("constructor done");
+    constructor(private roomService: RoomService,
+                private authService: AuthService,
+                private flashMessage: FlashMessagesService) {
     }
 
     ngOnInit() {
@@ -38,4 +44,7 @@ export class OverviewRoomsComponent implements OnInit {
         );
     }
 
+    addRoomClick(){
+
+    }
 }

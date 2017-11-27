@@ -29,9 +29,7 @@ export class RoomComponent implements OnInit {
     }
 
     onClickDelete() {
-        this.flashMessage.show("Zaal is verwijderd", {
-            cssClass: 'alert-delete',
-            timeout: 3000
-        });
+        this.flashMessage.show('De zaal kon niet verwijderd worden', {cssClass: 'alert-danger', timeout: 3000});
+
     }
 }
