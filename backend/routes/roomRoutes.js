@@ -2,15 +2,16 @@
 
 module.exports = function (app) {
     var RoomController = require('../controllers/roomController');
+    var AuthHelper = require('../helpers/authHelper');
 
     app.route('/rooms')
         .get(RoomController.getAllRooms)
-        .post(RoomController.addRoom);
+        .post(AuthHelper.adminRequired, RoomController.addRoom);
 
     app.route('/rooms/:id')
         .get(RoomController.getRoomById)
-        .delete(RoomController.deleteRoom)
-        .put(RoomController.updateRoom);
+        .delete(AuthHelper.adminRequired, RoomController.deleteRoom)
+        .put(AuthHelper.adminRequired, RoomController.updateRoom);
 
     app.route('/rooms/reservations/:from/:to')
         .get(RoomController.getAllRoomsWithReservationsByTimespan);

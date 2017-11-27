@@ -2,10 +2,12 @@
   <input type="date"  [(ngModel)]="dateIn" name="date"/>
   <button type="submit" class="btn btn-royal">zoek</button>
 </form>
-<table style="width: 100%">
+<button class="btn btn-royal" (click)="prevWeek()">vorige week</button>
+<button class="btn btn-royal" (click)="nextWeek()">volgende week</button>
+<table style="width: 100%" *ngIf="this.loaded">
   <tr>
     <th></th>
-    <th>zaal</th>
+    <th>{{this.room.name}}</th>
   </tr>
   <tr *ngFor="let i of this.indexes">
     <td style="white-space: pre-wrap; width: 5%">{{this.formatDate(this.daysOfWeek[i])}}</td>

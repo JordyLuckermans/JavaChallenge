@@ -1,20 +1,16 @@
-<div>
-  <div class="col-xs-12 col-md-6 col-lg-4 mb-2">
+  <div class="col-xs-12 col-lg-6">
     <div class="card">
-      <img class="card-img-top" src="../../../assets/zaal.PNG" alt="Card image cap">
+      <img class="card-img-top" src="../../../assets/zaal.PNG" alt="foto van de zaal">
       <div class="card-block">
         <h4 class="card-title pl-1">{{room.name}}</h4>
-        <p class="card-text pl-1">Deze danszaal bevat een grote spiegel en parket. Er is airco aanwezig voor
-          het
-          hoofd koel te houden tijdens de warme zomerdagen.</p>
+        <p class="card-text pl-1">{{room.description}}</p>
         <div class="pl-1">
           <!--Volgende knoppen moeten met ngIf want is enkel voor admin-->
-          <a [routerLink]="['/timeline']" class="btn btn-royal">Bewerken</a>
-          <a [routerLink]="['/timeline']" class="btn btn-danger">Verwijderen</a>
+          <div *ngIf="authService.loggedIn()"><a (click)="onClickEdit()" class="btn btn-royal">Bewerken</a></div>
+          <div *ngIf="authService.loggedIn()"><a (click)="onClickDelete()" class="btn btn-danger">Verwijderen</a></div>
           <!---->
-          <a [routerLink]="['/timeline']" class="btn btn-royal">Beschikbaarheid</a>
+          <a [routerLink]="['/timeline',{roomId:room._id}]" class="btn btn-royal">Beschikbaarheid</a>
         </div>
       </div>
     </div>
   </div>
-</div>

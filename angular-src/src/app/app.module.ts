@@ -24,12 +24,14 @@ import { EditRoomComponent } from './components/edit-room/edit-room.component';
 import { DummieDataComponent } from './components/dummie-data/dummie-data.component';
 import { RoomService} from "./services/room.service";
 import { RoomComponent } from './components/room/room.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 const appRoutes:Routes=[
   {path:'',component:HomeComponent},
   {path:'register',component:RegisterComponent},
   {path:'login',component:LoginComponent},
   {path:'timeline',component:TimelinesComponent},
+  {path:'admin',component:AdminComponent},
   {path:'overviewRooms',component:OverviewRoomsComponent},
   {path:'editRoom',component:EditRoomComponent},
   /*{path:'dashboard',component:DashboardComponent,canActivate:[AuthGuard]},
@@ -54,6 +56,7 @@ const appRoutes:Routes=[
     EditRoomComponent,
     DummieDataComponent,
     RoomComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,

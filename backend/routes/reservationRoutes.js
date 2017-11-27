@@ -1,27 +1,27 @@
 'use strict';
 
-module.exports = function(app) {
+module.exports = function (app) {
     var ReservationController = require('../controllers/reservationController');
     var AuthHelper = require('../helpers/authHelper');
 
     app.route('/reservations')
         .get(ReservationController.getAllReservations)
-        .post(ReservationController.addReservation);
+        .post(AuthHelper.loginRequired, ReservationController.addReservation);
 
     app.route('/reservations/confirmed')
-        .get(AuthHelper.loginRequired, ReservationController.getConfirmedReservations);
+        .get(ReservationController.getConfirmedReservations);
 
     app.route('/reservations/unconfirmed')
-        .get(AuthHelper.adminRequired, ReservationController.getUnconfirmedReservations);
+        .get(ReservationController.getUnconfirmedReservations);
 
     app.route('/reservations/:id')
         .get(ReservationController.getReservationById)
-        .delete(ReservationController.deleteReservation)
-        .put(ReservationController.updateReservation);
+        .delete(AuthHelper.adminRequired, ReservationController.deleteReservation)
+        .put(AuthHelper.loginRequired, ReservationController.updateReservation);
 
     app.route('/reservations/:id/confirm')
-        .patch(ReservationController.confirmReservation);
+        .patch(AuthHelper.adminRequired, ReservationController.confirmReservation);
 
     app.route('/reservations/:id/deny')
-        .patch(ReservationController.deleteReservation);
+        .patch(AuthHelper.adminRequired, ReservationController.deleteReservation);
 };
