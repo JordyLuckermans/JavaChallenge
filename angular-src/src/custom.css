@@ -1,0 +1,35 @@
+.btn-royal {
+    color: #2A2A2A;
+    background-color: #CEB549;
+    border-color: #a18b2b;
+}
+
+.btn-royal:hover {
+    color: white;
+    background-color: #a18b2b;
+    border-color: #8d7a25;
+}
+
+.btn-royal:focus, .btn-primary.focus {
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(50, 93, 136, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(50, 93, 136, 0.5);
+}
+
+.btn-royal.disabled, .btn-primary:disabled {
+    background-color: #eadfae;
+    border-color: #f4efd7;
+    color: dimgray;
+}
+
+.btn-royal:not([disabled]):not(.disabled):active, .btn-royal:not([disabled]):not(.disabled).active,
+.show > .btn-royal.dropdown-toggle {
+    color: #fff;
+    background-color: #CEB549;
+    border-color: #a18b2b;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(50, 93, 136, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(50, 93, 136, 0.5);
+}
+
+footer, app-navbar, .navbar{
+    background-color: #2A2A2A;
+}

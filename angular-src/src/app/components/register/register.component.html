@@ -1,40 +1,45 @@
-<h2>Register</h2>
+<h2>Registreer</h2>
 <form (submit)="onRegisterSubmit()" class="form-horizontal">
 
 
-    <div class="form-group">
-      <label  class="col-lg-2 control-label">Name:</label>
-      <div class="col-lg-10">
-        <input type="text" [(ngModel)]="name" name="name" class="form-control"  placeholder="Name">
-      </div>
+  <div class="form-group">
+    <label class="col-lg-3 control-label" for="name">Voornaam en familienaam:</label>
+    <div class="col-lg-10">
+      <input id="name" type="text" [(ngModel)]="name" name="name" class="form-control" placeholder="Voornaam en familienaam">
     </div>
-    <div class="form-group">
-      <label class="col-lg-2 control-label">Username:</label>
-      <div class="col-lg-10">
-        <input type="text"  [(ngModel)]="username" name="username" class="form-control"  placeholder="Username">
-      </div>
+  </div>
+  <div class="form-group">
+    <label class="col-lg-3 control-label" for="username">Gebruikersnaam:</label>
+    <div class="col-lg-10">
+      <input id="username" type="text" [(ngModel)]="username" name="username" class="form-control" placeholder="Gebruikersnaam">
     </div>
-    <div class="form-group">
-      <label  class="col-lg-2 control-label">Email:</label>
-      <div class="col-lg-10">
-        <input type="text" [(ngModel)]="email" name="email" class="form-control"  placeholder="Email">
-      </div>
+  </div>
+  <div class="form-group">
+    <label class="col-lg-3 control-label" for="mail">E-mail:</label>
+    <div class="col-lg-10">
+      <input id="mail" type="text" [(ngModel)]="email" name="email" class="form-control" placeholder="E-mail">
     </div>
-    <div class="form-group">
-      <label  class="col-lg-2 control-label">Password:</label>
-      <div class="col-lg-10">
-        <input type="password" [(ngModel)]="password" name="password" class="form-control" placeholder="Password">
+  </div>
+  <div class="form-group">
+    <label class="col-lg-3 control-label" for="password">Wachtwoord:</label>
+    <div class="col-lg-10">
+      <input id="password" type="password" [(ngModel)]="password" name="password" class="form-control" placeholder="Wachtwoord">
 
-      </div>
     </div>
+  </div>
+  <div class="form-group">
+    <label class="col-lg-3 control-label" for="phone">Telefoon:</label>
+    <div class="col-lg-10">
+      <input id="phone" type="text" [(ngModel)]="phoneNumber" name="phoneNumber" class="form-control" placeholder="Telefoon">
 
-
-
-    <div class="form-group">
-      <div class="col-lg-10 col-lg-offset-2">
-        <button type="reset" class="btn btn-default">Cancel</button>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </div>
     </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-lg-10 col-lg-offset-2">
+      <button type="reset" class="btn btn-light">Annuleer</button>
+      <button type="submit" class="btn btn-royal">Bevestig</button>
+    </div>
+  </div>
 
 </form>

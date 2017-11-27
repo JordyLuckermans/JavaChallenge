@@ -1,0 +1,42 @@
+<h1>Reserveren</h1>
+
+<form (submit)="onReserveSubmit()" class="form-horizontal">
+
+  <div class="form-group">
+    <label class="col-lg-2">Zaal</label>
+    <select class="form-control" name="room" [(ngModel)]="room">
+
+      <option *ngFor="let room of rooms" [ngValue]="room">{{room.name}}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2">Datum </label>
+    <input [(ngModel)]="date" class="form-control" type="text" name="date" placeholder="dd/mm/jjjj" required>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2">Van</label>
+    <input [(ngModel)]="starttime" class="form-control" name="starttime" type="text" placeholder="uu:mm" required>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2">Tot</label>
+    <input [(ngModel)]="endtime" class="form-control" name="endtime" type="text" placeholder="uu:mm" required>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2">Motivatie </label>
+    <textarea [(ngModel)]="motivation" class="form-control" name="motivation" type="text" placeholder="Schrijf hier waarom je graag de zaal wil huren" required></textarea>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-2">Extra opmerkingen </label>
+    <textarea [(ngModel)]="comment" class="form-control" name="comment" type="text" placeholder="Hier kan je nog extra's kwijt, anders zet je maar een streepje" required></textarea>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" value="Save" class="btn btn-royal">Bevestigen</button>
+  </div>
+
+</form>

@@ -1,0 +1,16 @@
+<div class="col-xs-12 col-lg-6">
+    <div class="card mb-2">
+      <img class="card-img-top" src="../../../assets/zaal.PNG" alt="foto van de zaal">
+      <div class="card-block">
+        <h4 class="card-title pl-1">{{room.name}}</h4>
+        <p class="card-text pl-1">{{room.description}}</p>
+        <div class="ml-2 row">
+          <!--Volgende knoppen moeten met ngIf want is enkel voor admin-->
+          <div *ngIf="authService.loggedIn()"><a [routerLink]="['/editRoom']" class="btn btn-royal">Bewerken</a></div>
+          <div *ngIf="authService.loggedIn()"><a (click)="onClickDelete()" class="btn btn-danger">Verwijderen</a></div>
+          <!---->
+          <a [routerLink]="['/timeline',{roomId:room._id}]" class="btn btn-royal">Beschikbaarheid</a>
+        </div>
+      </div>
+    </div>
+</div>
