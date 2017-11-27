@@ -13,7 +13,7 @@ import {FlashMessagesService} from 'angular2-flash-messages';
     <p>De volgende zalen stellen wij ter beschikking. Als er een zaal is dat je interesseert kan je meteen de
     beschikbaarheden nakijken en reserveren.</p>
     <br/>
-    <button class="btn btn-royal" [routerLink]="['/editRoom']">Zaal toevoegen</button>
+    <div *ngIf="authService.loggedIn()"><button class="btn btn-royal" [routerLink]="['/editRoom']">Zaal toevoegen</button></div>
     <br/>
     <div class="container-fluid">
         <div class="row">
@@ -44,7 +44,4 @@ export class OverviewRoomsComponent implements OnInit {
         );
     }
 
-    addRoomClick(){
-
-    }
 }
