@@ -46,8 +46,6 @@ export class ReserveComponent implements OnInit {
 
     this.authService.getProfile().subscribe(profile=> {
         this.user = profile.user.data;
-        console.dir(profile.user);
-        console.dir(this.user);
       },
       err=>{
         console.log(err);
@@ -66,17 +64,8 @@ export class ReserveComponent implements OnInit {
     startDateString = startDateArray[1] + "/" + startDateArray[0] + "/" + startDateArray[2];
     endDateString = endDateArray[1] + "/" + endDateArray[0] + "/" + endDateArray[2];
 
-
-    console.info("start", startDateString);
-    console.info("end", endDateString);
-
-
     let parsedStartDate = Date.parse(startDateString);
     let parsedEndDate = Date.parse(endDateString);
-
-
-    console.info("start", parsedStartDate);
-    console.info("end", parsedEndDate);
 
     if(!this.validateService.validateDateFormat(this.date)) {
       this.flashMessage.show("Gebruik aub een datum met formaat dd/mm/jjjj", {cssClass: 'alert-danger', timeout: 3000});
@@ -88,8 +77,6 @@ export class ReserveComponent implements OnInit {
       this.flashMessage.show("vul aub een geldige datum en tijdstip in", {cssClass: 'alert-danger', timeout: 3000});
       return false;
     }
-
-    console.info("date", this.date);
 
     //validation time
     if (!this.validateService.validateTime(this.starttime) && !this.validateService.validateTime(this.endtime)) {
@@ -108,9 +95,6 @@ export class ReserveComponent implements OnInit {
       return false;
     }
 
-
-
-    console.log(this.room);
     const reservation = {
       room: this.room['_id'],
       user: this.user['_id'],
@@ -119,8 +103,6 @@ export class ReserveComponent implements OnInit {
       motivation: this.motivation,
       comment: this.comment
     };
-
-    console.info("reservation:", reservation);
 
     if (!this.validateService.validateReservation(reservation)) {
       this.flashMessage.show('Vul aub alle velden in.', {cssClass: 'alert-danger', timeout: 3000});
@@ -134,6 +116,10 @@ export class ReserveComponent implements OnInit {
       } else {
         this.flashMessage.show('Er is iets mis gegaan bij het aanmaken van de reservering.', {cssClass: 'alert-danger', timeout: 3000});
       }
-    });
+    },
+    err => {
+      console.log(err);
+    }
+    );
   }
 }

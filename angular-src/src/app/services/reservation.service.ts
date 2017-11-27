@@ -11,12 +11,16 @@ export class ReservationService {
 
   url = "http://localhost:6600";
 
+  authToken: any;
+
   reservation: Reservation;
   reservations: Reservation[];
 
   //add pending reservation
   askReservation(reservation) {
+    this.loadToken();
     const headers = new Headers({'Content-Type': 'application/json'});
+    headers.append('Authorization', this.authToken);
     return this.http.post(this.url + "/reservations", reservation, {headers})
       .map(res => res.json());
   }
@@ -100,6 +104,11 @@ export class ReservationService {
       obj.comment,
       obj._id
     );
+  }
+
+  loadToken() {
+    const token = localStorage.getItem('id_token');
+    this.authToken = token;
   }
 
 }
